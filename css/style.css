@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Poppins;
+    text-decoration: none;
+}
+
+header,
+main,
+footer,
+nav,
+aside,
+section,
+article {
+    display: block;
+}
+
+body {
+    display: flex;
+    flex-flow: row;
+    background-color: #F5F5F5;
+}
+
+#logo {
+    display: flex;
+    background-image: url(../images/logo_white.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 225px;
+    height: 118px;
+    flex-shrink: 0;
+    margin: 45px;
+}
+
+nav {
+    display: flex;
+    position: sticky;
+    flex-flow: column;
+    align-items: center;
+    background-color: #182B4E;
+    height: 100vh;
+    width: 303px;
+}
+
+nav button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: #F4D793 1px solid;
+    background: #F4D793;
+    color: #182B4E;
+    font-weight: 500;
+    font-size: 20px;
+    border-radius: 10px;
+    gap: 15px;
+    padding: 8px 15px;
+    margin-bottom: 45px;
+    transition: background-color 0.3s ease;
+}
+
+nav button>img {
+    width: 43px;
+    height: 44px;
+}
+
+nav button:hover {
+    background: #182B4E;
+    color: #F4D793;
+}
+
+nav a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #F5F5F5;
+    font-size: 20px;
+}
+
+nav a>img {
+    margin-right: 20px;
+}
+
+nav a>span{
+    text-decoration: none;
+    line-height: 1;
+    background: linear-gradient(0deg, #F5F5F5, #F5F5F5) no-repeat right bottom / 0 var(--bg-h);
+    transition: background-size 350ms;
+    --bg-h: 100%;
+}
+
+nav a:hover > span {
+    background-size: 100% var(--bg-h);
+    background-position-x: left;
+}
+
+.underline>span {
+    padding-bottom: 2px;
+    --bg-h: 2px;
+}
+
+#dash-img {
+    width: 33px;
+    height: 33px;
+}
+
+#plans-img {
+    width: 43px;
+    height: 45px;
+}
+
+nav a.selected {
+    color: #F4D793;
+    font-weight: 600;
+    /* text-decoration: underline; */
+}
+
+ul {
+    display: flex;
+    flex-flow: column;
+    text-decoration: none;
+    list-style-type: none;
+    gap: 40px;
+}
+
+#logout {
+    margin-top: 200px;
+    margin-bottom: 10px;
+}
+
+#logout-img {
+    width: 33px;
+    height: 33px;
+}
