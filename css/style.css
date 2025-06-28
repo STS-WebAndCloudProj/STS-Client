@@ -21,6 +21,8 @@ body {
     background-color: #F5F5F5;
 }
 
+/*nav component*/
+
 #logo {
     display: flex;
     background-image: url(../images/logo_white.png);
@@ -34,7 +36,8 @@ body {
 
 nav {
     display: flex;
-    position: sticky;
+    /* position: sticky; */
+     position: fixed;
     flex-flow: column;
     align-items: center;
     background-color: #182B4E;
@@ -68,19 +71,20 @@ nav button:hover {
     color: #F4D793;
 }
 
-nav a{
+nav a {
     display: flex;
     align-items: center;
     justify-content: center;
     color: #F5F5F5;
     font-size: 20px;
+    text-decoration: none;
 }
 
 nav a>img {
     margin-right: 20px;
 }
 
-nav a>span{
+nav a>span {
     text-decoration: none;
     line-height: 1;
     background: linear-gradient(0deg, #F5F5F5, #F5F5F5) no-repeat right bottom / 0 var(--bg-h);
@@ -88,7 +92,7 @@ nav a>span{
     --bg-h: 100%;
 }
 
-nav a:hover > span {
+nav a:hover>span {
     background-size: 100% var(--bg-h);
     background-position-x: left;
 }
@@ -111,7 +115,6 @@ nav a:hover > span {
 nav a.selected {
     color: #F4D793;
     font-weight: 600;
-    /* text-decoration: underline; */
 }
 
 ul {
@@ -120,6 +123,8 @@ ul {
     text-decoration: none;
     list-style-type: none;
     gap: 40px;
+    margin: 0px;
+    padding: 0px;
 }
 
 #logout {
@@ -130,4 +135,105 @@ ul {
 #logout-img {
     width: 33px;
     height: 33px;
+}
+
+/* dashboard - main*/
+
+main {
+    margin-left: 303px;
+    padding: 24px;
+}
+
+main h2 {
+    color: #182B4E;
+    font-size: 30px;
+    margin: 40px 0px 30px 0px;
+}
+
+main h3 {
+    color: #182B4E;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+/*cards*/
+
+#custom-cards {
+    display: flex;
+    flex-direction: row;
+    gap: 70px;
+    margin-bottom: 45px;
+}
+
+.custom-card {
+    width: 200px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
+
+.red-bg {
+    background: #EA4F63;
+}
+
+.orange-bg {
+    background: #F7A961;
+}
+
+.yellow-bg {
+    background: #F4D35E;
+}
+
+.green-bg {
+    background: #5CB85C;
+}
+
+.custom-card-header {
+    width: 100%;
+    height: 30px;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.custom-card-body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 124px;
+    border-radius: 0px 0px 10px 10px;
+    opacity: 0.97;
+    background: #F5F5F5;
+}
+
+.custom-card-body h3 {
+    color: #182B4E;
+    font-size: 30px;
+    font-weight: 500;
+    margin-top: 6px;
+    margin-left: 12px;
+}
+
+.custom-card-body p {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    color: #182B4E;
+    font-size: 30px;
+    font-weight: 500;
+    margin-right: 12px;
+}
+
+/*recenr scans table*/
+
+#scan-tabels {
+    display: flex;
+    flex-flow: column;
+}
+
+#scan-table {
+    display: flex;
+    width: 390px;
+}
+
+#results-table {
+    display: flex;
+    width: 690px;
 }
