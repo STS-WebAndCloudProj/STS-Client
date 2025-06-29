@@ -103,29 +103,36 @@
                         <thead>
                             <tr>
                                 <!-- <th scope="col">#</th> -->
-                                <th scope="col">Target(s)</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Created</th>
+                                <th scope="col">Threat</th>
+                                <th scope="col">Vulnerability</th>
+                                <th scope="col">Severity</th>
+                                <th scope="col">Target</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <!-- <th scope="row">1</th> -->
+                                <td>Cross-site Scripting</td>
+                                <td>Stored XSS in comment section</td>
+                                <td><span class="severity-dot medium"></span> Medium</td>
                                 <td>https://example.com</td>
-                                <td>Submited</td>
-                                <td>now</td>
                             </tr>
                             <tr>
-                                <!-- <th scope="row">2</th> -->
+                                <td>SQL Injection</td>
+                                <td>Blind SQL Injection in API endpoint</td>
+                                <td><span class="severity-dot high"></span> High</td>
                                 <td>https://example.com</td>
-                                <td>Running</td>
-                                <td>27/06/2025</td>
                             </tr>
                             <tr>
-                                <!-- <th scope="row">3</th> -->
+                                <td>CSRF</td>
+                                <td>CSRF in payment submission form</td>
+                                <td><span class="severity-dot low"></span> Low</td>
                                 <td>https://example.com</td>
-                                <td>Completed</td>
-                                <td>01/06/2025</td>
+                            </tr>
+                            <tr>
+                                <td>RCE</td>
+                                <td>Remote Code Execution via file upload</td>
+                                <td><span class="severity-dot critical"></span> Critical</td>
+                                <td>https://example.com</td>
                             </tr>
                         </tbody>
                     </table>
