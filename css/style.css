@@ -36,7 +36,6 @@ body {
 
 nav {
     display: flex;
-    /* position: sticky; */
     position: fixed;
     flex-flow: column;
     align-items: center;
@@ -59,6 +58,21 @@ nav button {
     padding: 8px 15px;
     margin-bottom: 45px;
     transition: background-color 0.3s ease;
+}
+
+#selected-new-scan {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: #F4D793 1px solid;
+    background: #F4D793;
+    color: #182B4E;
+    font-weight: 500;
+    font-size: 20px;
+    border-radius: 10px;
+    gap: 15px;
+    padding: 8px 15px;
+    margin-bottom: 45px;
 }
 
 nav button>img {
@@ -102,8 +116,13 @@ nav a:hover>span {
     --bg-h: 2px;
 }
 
-#dash-img {
+#selected-dash-img {
     width: 33px;
+    height: 33px;
+}
+
+#dash-img {
+    width: 42px;
     height: 33px;
 }
 
@@ -142,13 +161,13 @@ ul {
 main {
     margin-left: 303px;
     padding: 24px;
+    width: 100%;
 }
 
 
 main h2 {
     color: #182B4E;
     font-size: 30px;
-    /* margin: 40px 0px 30px 0px; */
     margin-top: 16px;
     margin-bottom: 16px;
 }
@@ -277,4 +296,61 @@ table td {
 
 .severity-dot.critical {
     background-color: #EA4F63;
+}
+
+/* New Scan page */
+
+.stepper-box {
+    /* background-color: white; */
+    padding: 24px;
+    border-radius: 6px;
+    display: inline-block;
+    width: 100%;
+}
+
+.stepper {
+    display: flex;
+    justify-content: space-between;
+    min-width: 500px;
+    gap: 20px;
+}
+
+.step {
+    /* text-align: center; */
+    /* min-width: 180px; */
+    flex: 1;
+}
+
+.step-label {
+    font-size: 14px;
+    color: #8e9bb0;
+    margin-bottom: 4px;
+}
+
+.step-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2f3e53;
+    padding-bottom: 3px;
+    /* border-bottom: 2px solid #c4c4c4; */
+    white-space: nowrap;
+    display: inline-block;
+    line-height: 1.4;
+}
+
+.line{
+    height: 2px;
+    background-color: #c4c4c4;
+    width:250px;
+    /* flex-grow: 1;
+    align-self: center; */
+}
+
+.line.active{
+    background-color: #28a57e;
+}
+
+.step.active .step-title {
+    color: #182B4E;
+    font-weight: bold;
 }
