@@ -302,7 +302,7 @@ table td {
     background-color: #EA4F63;
 }
 
-/* New Scan page */
+/*-----------------------------New Scan page----------------------------- */
 
 #new-scan-main {
     padding: 24px;
@@ -411,12 +411,12 @@ table td {
     list-style: none;
     padding: 0;
     margin-bottom: 18px;
-    gap:1px;
+    gap: 1px;
 }
 
 .test-option-item {
     display: flex;
-    flex-flow:row;
+    flex-flow: row;
     align-items: center;
     gap: 8px;
     margin-bottom: 5px;
@@ -425,7 +425,7 @@ table td {
 .form-check {
     display: flex;
     align-items: center;
-    gap: 8px; /*spacing between checkbox and text*/
+    gap: 8px;
 }
 
 .form-check-label {
@@ -442,46 +442,46 @@ table td {
 }
 
 .custom-tooltip {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
 }
 
 .custom-tooltip::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  top: 50%;
-  left: 110%;
-  transform: translateY(-50%);
-  background-color: #FFFFFF;
-  color: #182B4E;
-  padding: 6px 10px;
-  border-radius: 5px;
-  white-space: nowrap;
-  font-size: 13px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease-in-out;
-  z-index: 1000;
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 50%;
+    left: 110%;
+    transform: translateY(-50%);
+    background-color: #FFFFFF;
+    color: #182B4E;
+    padding: 6px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    font-size: 13px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease-in-out;
+    z-index: 1000;
 }
 
 .custom-tooltip::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 103%;
-  transform: translateY(-50%);
-  border-width: 6px;
-  border-style: solid;
-  border-color: transparent black transparent transparent;
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
-  z-index: 999;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 103%;
+    transform: translateY(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    z-index: 999;
 }
 
 .custom-tooltip:hover::after,
 .custom-tooltip:hover::before {
-  opacity: 1;
+    opacity: 1;
 }
 
 /*add target*/
@@ -507,6 +507,99 @@ table td {
     border-radius: 10px;
     gap: 15px;
     padding: 6px 10px;
+}
+
+/*modal*/
+
+.custom-modal {
+    background-color: #f8f9fa;
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    border: none;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.custom-modal .modal-header {
+    border-bottom: none;
+    padding-bottom: 10px;
+    margin-left: 10px;
+}
+
+.custom-modal .modal-title {
+    font-size: 22px;
+    font-weight: 400px;
+    color: #1c1c1c;
+}
+
+.custom-modal .close-btn {
+    background: none;
+    border: none;
+    font-size: 35px;
+    line-height: 1;
+    cursor: pointer;
+    color: #555;
+    margin-right:10px;
+}
+
+.custom-modal .modal-body {
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.custom-modal input[type="url"],
+.custom-modal input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.custom-modal label {
+    font-weight: 500;
+    font-size: 14px;
+    color: #333;
+}
+
+.custom-modal .modal-footer {
+    border-top: none;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-cancel {
+    background-color: #e0e0e0;
+    color: #333;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-submit {
+    background-color: #182B4E;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-cancel:hover,
+.btn-submit:hover {
+    opacity: 0.9;
 }
 
 /*table*/
