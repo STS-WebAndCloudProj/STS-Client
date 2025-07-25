@@ -9,4 +9,14 @@ window.onload = () => {
     new_scan_btn.addEventListener("mouseleave", () => {
         new_scan_img.src = "./images/new_scan.png";
     });
+
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="tooltip"], [data-bs-toggle="tooltip"]'));
+    //     tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+    //         new bootstrap.Tooltip(tooltipTriggerEl);
+    //     });
+    // });
+
 };
+
+
