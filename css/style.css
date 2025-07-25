@@ -490,7 +490,7 @@ table td {
     display: flex;
     flex-flow: row;
     justify-content: space-between;
-    padding: 5px 120px 5px 0px;
+    padding: 5px 120px 15px 0px;
 }
 
 #add-target-btn {
@@ -546,7 +546,7 @@ table td {
     line-height: 1;
     cursor: pointer;
     color: #555;
-    margin-right:10px;
+    margin-right: 10px;
 }
 
 .custom-modal .modal-body {
@@ -616,6 +616,7 @@ table td {
     border-radius: 8px;
     margin-bottom: 5px;
     width: 90%;
+    height: 50px;
     box-sizing: border-box;
 }
 
@@ -685,6 +686,66 @@ table td {
 .date-head {
     width: 20%;
 }
+
+/* עיטוף כללי לפאגינציה */
+#pagination-container {
+    display: flex;
+}
+
+/* איפוס עיצוב שנגרם מהעיצוב הכללי של nav */
+.pagination-nav {
+    all: unset;
+    display: flex;
+    justify-content: center;
+}
+
+/* עיצוב רשימת הפאגינציה */
+.pagination {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    background-color: transparent;
+    padding: 0;
+    list-style: none;
+    margin: 10px 0;
+}
+
+/* עיצוב כפתורי העמודים */
+.page-link {
+    border: 1px solid #182B4E;
+    border-radius: 6px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #182B4E;
+    font-size: 14px;
+    background-color: #fff;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    padding: 0;
+}
+
+/* ריחוף */
+.page-link:hover {
+    background-color: #182B4E;
+    color: #ffffff;
+}
+
+/* עמוד פעיל */
+.page-item.active .page-link {
+    background-color: #182B4E;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* פוקוס */
+.page-link:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(24, 43, 78, 0.2);
+}
+
 
 #next-button-container {
     display: flex;
