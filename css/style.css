@@ -60,7 +60,7 @@ nav button {
     transition: background-color 0.3s ease;
 }
 
-#selected-new-scan {
+.selected-new-scan {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -687,19 +687,16 @@ table td {
     width: 20%;
 }
 
-/* עיטוף כללי לפאגינציה */
 #pagination-container {
     display: flex;
 }
 
-/* איפוס עיצוב שנגרם מהעיצוב הכללי של nav */
 .pagination-nav {
     all: unset;
     display: flex;
     justify-content: center;
 }
 
-/* עיצוב רשימת הפאגינציה */
 .pagination {
     display: flex;
     flex-direction: row;
@@ -710,7 +707,6 @@ table td {
     margin: 10px 0;
 }
 
-/* עיצוב כפתורי העמודים */
 .page-link {
     border: 1px solid #182B4E;
     border-radius: 6px;
@@ -727,20 +723,17 @@ table td {
     padding: 0;
 }
 
-/* ריחוף */
 .page-link:hover {
     background-color: #182B4E;
     color: #ffffff;
 }
 
-/* עמוד פעיל */
 .page-item.active .page-link {
     background-color: #182B4E;
     color: #ffffff;
     font-weight: 600;
 }
 
-/* פוקוס */
 .page-link:focus {
     outline: none;
     box-shadow: 0 0 0 2px rgba(24, 43, 78, 0.2);
@@ -768,4 +761,82 @@ table td {
     border-radius: 10px;
     gap: 15px;
     padding: 6px 10px;
+}
+
+/*-----------------------------New-Scan: Configurtion----------------------------- */
+#config-options {
+    /* background: #f8f8f8; */
+    padding: 2px;
+    border-radius: 12px;
+    max-width: 600px;
+    gap: 2px;
+}
+
+.schedule-option {
+    margin-bottom: 1.5px;
+}
+
+.schedule-option label {
+    font-weight: 500;
+    margin-right: 8px;
+    color: #182B4E;
+}
+
+.sub-options {
+    margin: 5px 8px 0px 15px;
+    font-weight: 500;
+    color: #182B4E;
+}
+
+.sub-options-labels {
+    margin-left: 18px;
+}
+
+.days label {
+    margin-right: 10px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="time"],
+input[type="datetime-local"],
+select {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    margin-top: 4px;
+    margin-bottom: 0.5rem;
+}
+
+.custom-radio {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #182B4E;
+    border-radius: 50%;
+    background-color: white;
+    position: relative;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-right: 6px;
+    transition: all 0.2s ease;
+}
+
+.custom-radio:checked::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: #182B4E;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.custom-radio:hover {
+    border-color: #182B4E;
 }

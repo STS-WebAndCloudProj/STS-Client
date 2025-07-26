@@ -21,7 +21,7 @@
 <body>
     <nav>
         <a href="index.html" id="logo"></a>
-        <button id="selected-new-scan"><img id="new-scan-img" src="./images/new_scan.png">
+        <button id="new-scan-btn" class="selected-new-scan"><img id="new-scan-img" src="./images/new_scan.png">
             New Scan</button>
         <ul>
             <li><a href="index.html" class="underline"><img id="dash-img"
@@ -31,51 +31,120 @@
         </ul>
         <a id="logout" class="underline" href="#"><img id="logout-img" src="./images/logout.png"><span>Logout</span></a>
     </nav>
-    <main id="new-scan-main">
-        <h2>New Scan</h2>
-        <!-- Stteper -->
-        <section class="stepper-box">
-            <section class="stepper">
-                <section class="step">
-                    <section class="step-label">Step 1</section>
-                    <section class="line">
-                        <svg width="100%" height="1vh">
-                            <line x1="0" y1="0" x2="100%" y2="0"></line>
-                        </svg>
+    <div class="page-wrapper">
+        <main id="new-scan-main">
+            <h2>New Scan</h2>
+            <!-- Stteper -->
+            <section class="stepper-box">
+                <section class="stepper">
+                    <section class="step">
+                        <section class="step-label">Step 1</section>
+                        <section class="line">
+                            <svg width="100%" height="1vh">
+                                <line x1="0" y1="0" x2="100%" y2="0"></line>
+                            </svg>
+                        </section>
+                        <section class="step-title">Select Type and Target</section>
                     </section>
-                    <section class="step-title">Select Type and Target</section>
-                </section>
-                <section class="step active">
-                    <section class="step-label">Step 2</section>
-                    <section class="line active">
-                        <svg width="100%" height="1vh">
-                            <line x1="0" y1="0" x2="100%" y2="0"></line>
-                        </svg>
+                    <section class="step active">
+                        <section class="step-label">Step 2</section>
+                        <section class="line active">
+                            <svg width="100%" height="1vh">
+                                <line x1="0" y1="0" x2="100%" y2="0"></line>
+                            </svg>
+                        </section>
+                        <section class="step-title">Configure</section>
                     </section>
-                    <section class="step-title">Configure</section>
-                </section>
-                <section class="step">
-                    <section class="step-label">Step 3</section>
-                    <section class="line">
-                        <svg width="100%" height="1vh">
-                            <line x1="0" y1="0" x2="100%" y2="0"></line>
-                        </svg>
+                    <section class="step">
+                        <section class="step-label">Step 3</section>
+                        <section class="line">
+                            <svg width="100%" height="1vh">
+                                <line x1="0" y1="0" x2="100%" y2="0"></line>
+                            </svg>
+                        </section>
+                        <section class="step-title">Review</section>
                     </section>
-                    <section class="step-title">Review</section>
                 </section>
             </section>
-        </section>
-        <!-- Configure -->
-        <h3>Configure</h3>
-        <!-- Next -->
-        <section id="next-button-container">
-            <button id="next-step-btn">Next</button>
-        </section>
-    </main>
+            <!-- Configure -->
+            <h3>Configure</h3>
+            <p>Run the scan just one time or on a recurring schedule.</p>
+            <section id="config-options">
+                <section class="schedule-option">
+                    <input type="radio" class="custom-radio" name="scheduleType" id="oneTime" checked>
+                    <label for="oneTime">One Time</label>
+                    <section class="sub-options" id="oneTimeOptions">
+                        <input type="radio" class="custom-radio" name="oneTimeTiming" id="now" checked>
+                        <label for="now">Now</label><br>
+                        <input type="radio" class="custom-radio" name="oneTimeTiming" id="scheduled">
+                        <label for="scheduled">At a scheduled time</label>
+                        <br>
+                        <section class="sub-options-labels">
+                            <label>Time: <input type="time"></label>
+                            <label>Date: <input type="date"></label>
+                        </section>
+                    </section>
+                    <section class="schedule-option">
+                        <input type="radio" class="custom-radio" name="scheduleType" id="daily">
+                        <label for="daily">Daily</label>
+                        <section class="sub-options" id="dailyOptions">
+                            <label>Time: <input type="time"></label>
+                            <label>Every <input type="number" min="1" value="1" max="6"> day(s)</label>
+                        </section>
+                    </section>
+                    <section class="schedule-option">
+                        <input type="radio" class="custom-radio" name="scheduleType" id="weekly">
+                        <label for="weekly">Weekly</label>
+                        <section class="sub-options" id="weeklyOptions">
+                            <section class="days">
+                                <label><input type="checkbox" value="Sunday"> Sun</label>
+                                <label><input type="checkbox" value="Monday"> Mon</label>
+                                <label><input type="checkbox" value="Tuesday"> Tue</label>
+                                <label><input type="checkbox" value="Wednesday"> Wed</label>
+                                <label><input type="checkbox" value="Thursday"> Thu</label>
+                                <label><input type="checkbox" value="Friday"> Fri</label>
+                                <label><input type="checkbox" value="Saturday"> Sat</label>
+                            </section>
+                            <label>Time: <input type="time"></label>
+                        </section>
+                    </section>
+                    <section class="schedule-option">
+                        <input type="radio" class="custom-radio" name="scheduleType" id="monthly">
+                        <label for="monthly">Monthly</label>
+                        <section class="sub-options" id="monthlyOptions">
+                            <label>Day of month: <input type="number" min="1" max="31"></label>
+                            <label>Time: <input type="time"></label>
+                        </section>
+                    </section>
+                    <section class="schedule-option">
+                        <input type="radio" class="custom-radio" name="scheduleType" id="quarterly">
+                        <label for="quarterly">Quarterly</label>
+                        <section class="sub-options" id="quarterlyOptions">
+                            <label>Month:
+                                <select>
+                                    <option>January</option>
+                                    <option>April</option>
+                                    <option>July</option>
+                                    <option>October</option>
+                                </select>
+                            </label>
+                            <label>Day: <input type="number" min="1" max="31"></label>
+                            <label>Time: <input type="time"></label>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <!-- Next -->
+            <section id="next-button-container">
+                <button id="next-step-btn">Next</button>
+            </section>
+        </main>
+    </div>
     <!-- Bootstap js link-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- js -->
     <script src="js/scripts.js"></script>
+
 </body>
 
 </html>
