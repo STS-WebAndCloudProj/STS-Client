@@ -1,4 +1,11 @@
 window.onload = () => {
+
+    document.querySelector('.toggle-password').addEventListener('click', () => {
+        const input = this.previousElementSibling;
+        input.type = input.type === 'password' ? 'text' : 'password';
+        this.innerHTML = `<i class="far fa-eye${input.type === 'password' ? '' : '-slash'}"></i>`;
+    });
+
     const new_scan_btn = document.getElementById("new-scan-btn");
     const new_scan_img = document.getElementById("new-scan-img");
 

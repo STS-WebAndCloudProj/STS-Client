@@ -13,10 +13,34 @@
     <title>STS - Login</title>
 </head>
 
-<body>
-    <main>
+<body class="login-body">
+    <div class="login-container">
+        <img src="..//images/logo_blue.svg" alt="STS Logo" class="login-logo" />
 
-    </main>
+        <div class="login-card">
+            <h2>Sign in to STS</h2>
+
+            <form>
+                <label>Email</label>
+                <input type="email" placeholder="you@example.com" required />
+
+                <div class="password-row">
+                    <label>Password</label>
+                    <a href="#" class="forgot-link">Forgot Password?</a>
+                </div>
+                <div class="password-input">
+                    <input type="password" required />
+                    <span class="toggle-password"><i class="far fa-eye"></i></span>
+                </div>
+
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+
+            <p class="signup-link">
+                New to STS? <a href="#">Sign Up Here</a>
+            </p>
+        </div>
+    </div>
 </body>
 
 </html>
