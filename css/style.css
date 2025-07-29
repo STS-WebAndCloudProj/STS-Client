@@ -20,6 +20,27 @@ body {
     flex-flow: row;
     background-color: #f5f5f5;
 }
+/*-------------------------------------------Global Styles-------------------------------------------*/
+
+/* alert container placement */
+#alertContainer {
+  margin-top: 20px;
+}
+
+/* custom alert style (in addition to Bootstrap) */
+#alertContainer .alert {
+  font-family: 'Poppins', sans-serif;
+  border-radius: 10px;
+  padding: 15px 20px;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* optional: adjust icon size */
+#alertContainer .alert svg {
+  width: 20px;
+  height: 20px;
+}
 
 /*-------------------------------------------Login-------------------------------------------*/
 /* Base */
