@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const serverUrl = 'http://localhost:3000/api';
     const loginForm = document.querySelector('form');
     const emailInput = loginForm.querySelector('input[type="email"]');
     const passwordInput = loginForm.querySelector('input[type="password"]');
@@ -16,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch('http://localhost:3000/api/users/login', {
+            const response = await fetch(`${serverUrl}/users/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
