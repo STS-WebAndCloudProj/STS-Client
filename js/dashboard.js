@@ -1,5 +1,13 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const serverUrl = 'http://localhost:3000/api';
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  if (!user) {
+    console.error("User not found in session storage.");
+    window.location.href = "login.html";
+    return;
+  }
+  userId = user.userId; 
+  
   const scansTableBody = document.querySelector("#scansTable tbody");
   const risksTableBody = document.querySelector("#risksTable tbody");
 
@@ -9,8 +17,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     medium: document.querySelector(".custom-card.yellow-bg .card-val"),
     low: document.querySelector(".custom-card.green-bg .card-val")
   };
-
-  const userId = '2dac878d-5bf2-4e14-813d-a0fbc6655ba2'; // Replace with dynamic user ID if needed
+  
+  // const userId = '2dac878d-5bf2-4e14-813d-a0fbc6655ba2'; // Replace with dynamic user ID if needed
 
   try {
     const resultsRes = await fetch(`${serverUrl}/results/${userId}`);
