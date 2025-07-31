@@ -115,3 +115,4 @@ const populateScansTable = (scans, scansTableBody, urlIdToUrl) => {
 const tableError = (tableBody, message) => {
   tableBody.innerHTML = `<tr><td colspan="4">${message}</td></tr>`;
 }
+

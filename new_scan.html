@@ -172,10 +172,10 @@
             </tbody>
           </table>
         </section>
-      <!-- Next -->
-      <section id="next-button-container">
-        <button class="next-step-btn">Next</button>
-      </section>
+        <!-- Next -->
+        <section id="next-button-container">
+          <button class="next-step-btn">Next</button>
+        </section>
     </section>
     <!---------------------------------------------------- Step 2 ---------------------------------------------------->
     <section id="step-2" class="step-content" style="display:none;">
@@ -267,7 +267,6 @@
             </div>
           </section>
         </section>
-
         <!-- QUARTERLY -->
         <section class="schedule-option">
           <input type="radio" class="custom-radio" name="scheduleType" id="quarterly">
@@ -296,7 +295,29 @@
             </div>
           </section>
         </section>
+
+        <!-- Sync with Google Calendar -->
+        <section id="sync-calendar">
+          <div class="row mt-4 align-items-center">
+            <div class="col-auto">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="syncToCalendar">
+                <label class="form-check-label" for="syncToCalendar">
+                  Sync with Google Calendar
+                </label>
+              </div>
+            </div>
+            <div class="col-auto">
+              <span class="custom-tooltip"
+                data-tooltip="Adds a reminder to your Google Calendar when this scan is scheduled.">
+                <img class="tooltip-icon" src="./images/information.svg" alt="info">
+              </span>
+            </div>
+          </div>
+        </section>
+
       </section>
+
       <section id="bottom-buttons-container">
         <button class="prev-step-btn">Previous</button>
         <button class="next-step-btn">Next</button>

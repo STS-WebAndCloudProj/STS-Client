@@ -1,7 +1,16 @@
 window.addEventListener("DOMContentLoaded", async () => {
     const serverUrl = 'http://localhost:3000/api';
     const userId = '2dac878d-5bf2-4e14-813d-a0fbc6655ba2'; // Replace with dynamic ID if needed
+
+    console.log("target-table:", document.getElementById("target-table"));
+    console.log("tbody:", document.querySelector("#target-table tbody"));
+
     const urlsTableBody = document.querySelector("#target-table tbody");
+    if (!urlsTableBody) {
+        console.error('No #target-table tbody found in the DOM!');
+        return;
+    }
+
     // Setup interactions
     setupScheduleTypeRadios();
     setupScheduleTimeToggle();
@@ -166,7 +175,6 @@ function collectScanFormData() {
 }
 
 
-// 🔽 Send one POST per selected target
 async function submitScansToServer(userId, serverUrl, selectedUrls, scheduledFor) {
     const res = await fetch(`${serverUrl}/urls/${userId}`);
     if (!res.ok) throw new Error("Failed to fetch user URLs");
@@ -185,6 +193,7 @@ async function submitScansToServer(userId, serverUrl, selectedUrls, scheduledFor
             status: 'pending'
         };
 
+        // Create scan
         const scanRes = await fetch(`${serverUrl}/scans/${match.urlId}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -192,10 +201,47 @@ async function submitScansToServer(userId, serverUrl, selectedUrls, scheduledFor
         });
 
         if (!scanRes.ok) {
-            throw new Error(`Failed to create scan for ${target.url}`);
+            console.error(`Failed to create scan for ${target.url}`);
+            continue;
+        }
+
+        const scanResponse = await scanRes.json();
+        const scan = scanResponse.scan; // ✅ because server returns { message, scan }
+
+        // If scheduledFor is null → run immediately
+        if (!scheduledFor) {
+            console.log("Running immediate scan for:", scan.scanId);
+
+            // Post results
+            const resultRes = await fetch(`${serverUrl}/results`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userId,
+                    scanId: scan.scanId
+                })
+            });
+
+            if (!resultRes.ok) {
+                console.error(`Failed to post result for scan ${scan.scanId}`);
+                continue;
+            }
+
+            // Update status to completed
+            const updateRes = await fetch(`${serverUrl}/scans/${scan.scanId}/status`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: 'completed' })
+            });
+
+            if (!updateRes.ok) {
+                console.error(`Failed to update scan status for ${scan.scanId}`);
+            }
         }
     }
 }
+
+
 
 function setupScanTypeCheckboxes() {
     const checkboxes = document.querySelectorAll('#checkbox-list input[type="checkbox"]');
