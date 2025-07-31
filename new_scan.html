@@ -137,8 +137,8 @@
           </div>
         </div>
         <!-- Table -->
-        <section id="target-table">
-          <table class="table table-hover table-responsive">
+        <section id="target-container">
+          <table id="target-table" class="table table-hover table-responsive">
             <thead>
               <tr>
                 <th class="checkbox-th" scope="col"></th>
@@ -172,29 +172,6 @@
             </tbody>
           </table>
         </section>
-      </div>
-      <!-- Pagination -->
-      <section id="pagination-container">
-        <nav class="pagination-nav" aria-label="Page navigation example">
-          <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-                <span class="sr-only">Previous</span>
-              </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-                <span class="sr-only">Next</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </section>
       <!-- Next -->
       <section id="next-button-container">
         <button class="next-step-btn">Next</button>
@@ -385,15 +362,15 @@
         </section>
         <section id="bottom-buttons-container">
           <button class="prev-step-btn">Previous</button>
-          <button id="run-scan-btn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Run Scan</button>
+          <button id="run-scan-btn" data-bs-toggle="modal" data-bs-target="#confirmRunModal">Run Scan</button>
         </section>
         <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalLabel"
+        <div class="modal fade" id="confirmRunModal" tabindex="-1" aria-labelledby="confirmModalLabel"
           aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content custom-modal">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Confirm Scan</h5>
+                <h5 class="modal-title" id="confirmModalLabel">Confirm Scan</h5>
                 <button type="button" class="close-btn" data-bs-dismiss="modal" aria-label="Close">&times;</button>
               </div>
               <div class="modal-body">

@@ -20,26 +20,27 @@ body {
     flex-flow: row;
     background-color: #f5f5f5;
 }
+
 /*-------------------------------------------Global Styles-------------------------------------------*/
 
 /* alert container placement */
 #alertContainer {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 /* custom alert style (in addition to Bootstrap) */
 #alertContainer .alert {
-  font-family: 'Poppins', sans-serif;
-  border-radius: 10px;
-  padding: 15px 20px;
-  font-size: 0.95rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif;
+    border-radius: 10px;
+    padding: 15px 20px;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* optional: adjust icon size */
 #alertContainer .alert svg {
-  width: 20px;
-  height: 20px;
+    width: 20px;
+    height: 20px;
 }
 
 /*-------------------------------------------Login-------------------------------------------*/
@@ -795,7 +796,7 @@ table td {
     color: #8b95a9;
 }
 
-#target-table {
+#target-container {
     margin-top: 14px;
     width: 90%;
     overflow-x: auto;
@@ -882,8 +883,9 @@ table td {
 #next-button-container {
     display: flex;
     justify-content: flex-end;
-    margin-top: 20px;
-    margin-bottom: 10px;
+    align-items: flex-end;
+    height: 100%;
+    padding: 0px 20px 10px 0px;
 }
 
 .next-step-btn {
@@ -1101,8 +1103,7 @@ input[type="number"] {
     padding: 0px 20px 10px 0px;
     z-index: 100;
     align-items: flex-end;
-    /* height: 100%; */
-    /* gap:80% */
+    height: 100%;
 }
 
 .prev-step-btn {
@@ -1130,11 +1131,11 @@ input[type="number"] {
     margin-bottom: 10px;
 }
 
-#review-container  {
+#review-container {
     display: flex;
     flex-direction: column;
     gap: 16px;
-}  
+}
 
 .summary-box {
     background-color: #ffffff;
@@ -1280,4 +1281,10 @@ input[type="number"] {
     border-radius: 10px;
     gap: 15px;
     padding: 6px 10px;
+}
+
+.active-step {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
 }
