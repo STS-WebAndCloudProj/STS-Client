@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Scan</title>
+  <!-- poppins font -->
+  <link href="https://fonts.googleapis.com/css2?family=Abel&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+  <nav>
+    <a href="index.html" id="logo"></a>
+    <button id="selected-new-scan"><img id="new-scan-img" src="./images/new_scan.png">
+      New Scan</button>
+    <ul>
+      <li><a href="index.html" class="underline"><img id="dash-img"
+            src="./images/dashboard _white.png"><span>Dashboard</span></a></li>
+      <li><a href="#" class="underline"><img id="plans-img" src="./images/view_plans_white.png"><span>View
+            Plans</span></a></li>
+    </ul>
+    <a id="logout" class="underline" href="#"><img id="logout-img" src="./images/logout.png"><span>Logout</span></a>
+  </nav>
+  <!-- ...existing nav code... -->
+  <main id="new-scan-main">
+    <h2>New Scan</h2>
+    <!-- Stepper (keep as is) -->
+    <section class="stepper-box">
+      <section class="stepper">
+        <section class="step" id="stepper-1">
+          <section class="step-label">Step 1</section>
+          <section class="line"></section>
+          <section class="step-title">Select Type and Target</section>
+        </section>
+        <section class="step" id="stepper-2">
+          <section class="step-label">Step 2</section>
+          <section class="line"></section>
+          <section class="step-title">Configure</section>
+        </section>
+        <section class="step" id="stepper-3">
+          <section class="step-label">Step 3</section>
+          <section class="line"></section>
+          <section class="step-title">Review</section>
+        </section>
+      </section>
+    </section>
+    <!---------------------------------------------------- Step 1 ---------------------------------------------------->
+    <section id="step-1" class="step-content">
+      <h3>Select Test Type</h3>
+      <section id="checkbox-list">
+        <ul class="test-options-list">
+          <li class="test-option-item">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+              <label class="form-check-label" for="defaultCheck1">
+                Opaque Box Testing
+              </label>
+            </div>
+            <span class="custom-tooltip" data-tooltip="Opaque box: no internal system knowledge">
+              <img class="tooltip-icon" src="./images/information.svg" alt="info">
+            </span>
+          </li>
+          <li class="test-option-item">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+              <label class="form-check-label" for="defaultCheck1">
+                Semi-Opaque Box Testing
+              </label>
+            </div>
+            <span class="custom-tooltip" data-tooltip="Semi-opaque box: limited internal visibility">
+              <img class="tooltip-icon" src="./images/information.svg" alt="info">
+            </span>
+          </li>
+          <li class="test-option-item">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
+              <label class="form-check-label" for="defaultCheck1">
+                Transparent Box Testing
+              </label>
+            </div>
+            <span class="custom-tooltip" data-tooltip="Transparent box: full access to system internals">
+              <img class="tooltip-icon" src="./images/information.svg" alt="info">
+            </span>
+          </li>
+        </ul>
+      </section>
+      <!-- Target Table -->
+      <section id="add-target-container">
+        <h3>Select Targets</h3>
+        <!--Add target +  Modal -->
+        <button type="button" id="add-target-btn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+          Add Target
+        </button>
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal">
+
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Target</h5>
+                <button type="button" class="close-btn" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+              </div>
+
+              <div class="modal-body">
+                <label for="target-url">Target *</label>
+                <input type="url" id="target-url" placeholder="https://example.com">
+
+                <label for="target-label">Label</label>
+                <input type="text" id="target-label" placeholder="example-website">
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn-submit">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Search bar -->
+      <div class="search-and-table-container">
+        <div class="search-bar-container">
+          <div class="search-box" id="target-search">
+            <i class="fas fa-search"></i>
+            <input type="text" class="form-control custom-search" placeholder="Search by URL">
+          </div>
+          <div class="search-box" id="label-search">
+            <i class="fas fa-search"></i>
+            <input type="text" class="form-control custom-search" placeholder="Search by label">
+          </div>
+        </div>
+        <!-- Table -->
+        <section id="target-table">
+          <table class="table table-hover table-responsive">
+            <thead>
+              <tr>
+                <th class="checkbox-th" scope="col"></th>
+                <th class="url-head" scope="col">Target(s)</th>
+                <th class="label-head" scope="col">Label</th>
+                <th class="date-head" scope="col">Created</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th class="checkbox-th" scope="row"><input class="form-check-input" type="checkbox">
+                </th>
+                <td class="url-cell">https://example.com</td>
+                <td class="label-cell"></td>
+                <td class="date-cell">now</td>
+              </tr>
+              <tr>
+                <th class="checkbox-th" scope="row"><input class="form-check-input" type="checkbox">
+                </th>
+                <td class="url-cell">https://example.com</td>
+                <td class="label-cell"></td>
+                <td class="date-cell">27/06/2025</td>
+              </tr>
+              <tr>
+                <th class="checkbox-th" scope="row"><input class="form-check-input" type="checkbox">
+                </th>
+                <td class="url-cell">https://example.com</td>
+                <td class="label-cell">Example-Site</td>
+                <td class="date-cell">01/06/2025</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+      <!-- Pagination -->
+      <section id="pagination-container">
+        <nav class="pagination-nav" aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </section>
+      <!-- Next -->
+      <section id="next-button-container">
+        <button class="next-step-btn">Next</button>
+      </section>
+    </section>
+    <!---------------------------------------------------- Step 2 ---------------------------------------------------->
+    <section id="step-2" class="step-content" style="display:none;">
+      <!-- Configure -->
+      <h3>Configure</h3>
+      <p>Run the scan just one time or on a recurring schedule.</p>
+      <section id="config-options">
+        <!-- ONE TIME -->
+        <section class="schedule-option">
+          <input type="radio" class="custom-radio" name="scheduleType" id="oneTime" checked>
+          <label for="oneTime">One Time</label>
+          <section class="sub-options" id="oneTimeOptions">
+            <input type="radio" class="custom-radio" name="oneTimeTiming" id="now" checked>
+            <label for="now">Now</label><br>
+            <input type="radio" class="custom-radio" name="oneTimeTiming" id="scheduled">
+            <label for="scheduled">At a scheduled time</label><br>
+            <div class="styled-input">
+              <i class="fas fa-clock"></i>
+              <input type="time" class="styled-field">
+            </div>
+            <div class="styled-input">
+              <i class="fas fa-calendar-alt"></i>
+              <input type="date" class="styled-field">
+            </div>
+          </section>
+        </section>
+
+        <!-- DAILY -->
+        <section class="schedule-option">
+          <input type="radio" class="custom-radio" name="scheduleType" id="daily">
+          <label for="daily">Daily</label>
+          <section class="sub-options" id="dailyOptions">
+            <div class="inline-fields">
+              <span class="input-label">Time:</span>
+              <div class="styled-input small">
+                <i class="fas fa-clock"></i>
+                <input type="time" class="styled-field">
+              </div>
+              <span class="input-label">Every</span>
+              <div class="styled-input small">
+                <i class="fas fa-hashtag"></i>
+                <input type="number" class="styled-field" min="1" value="1" max="6">
+              </div>
+              <span class="input-label">day(s)</span>
+            </div>
+          </section>
+        </section>
+
+        <!-- WEEKLY -->
+        <section class="schedule-option">
+          <input type="radio" class="custom-radio" name="scheduleType" id="weekly">
+          <label for="weekly">Weekly</label>
+          <section class="sub-options" id="weeklyOptions">
+            <section class="days">
+              <label><input type="checkbox" class="styled-checkbox" value="Sunday"> Sun</label>
+              <label><input type="checkbox" class="styled-checkbox" value="Monday"> Mon</label>
+              <label><input type="checkbox" class="styled-checkbox" value="Tuesday"> Tue</label>
+              <label><input type="checkbox" class="styled-checkbox" value="Wednesday"> Wed</label>
+              <label><input type="checkbox" class="styled-checkbox" value="Thursday"> Thu</label>
+              <label><input type="checkbox" class="styled-checkbox" value="Friday"> Fri</label>
+              <label><input type="checkbox" class="styled-checkbox" value="Saturday"> Sat</label>
+            </section>
+            <div class="inline-fields">
+              <span class="input-label">Time:</span>
+              <div class="styled-input small">
+                <i class="fas fa-clock"></i>
+                <input type="time" class="styled-field">
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <!-- MONTHLY -->
+        <section class="schedule-option">
+          <input type="radio" class="custom-radio" name="scheduleType" id="monthly">
+          <label for="monthly">Monthly</label>
+          <section class="sub-options" id="monthlyOptions">
+            <div class="inline-fields">
+              <span class="input-label">Day of month:</span>
+              <div class="styled-input small">
+                <i class="fas fa-hashtag"></i>
+                <input type="number" class="styled-field" min="1" max="31">
+              </div>
+              <span class="input-label">Time:</span>
+              <div class="styled-input small">
+                <i class="fas fa-clock"></i>
+                <input type="time" class="styled-field">
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <!-- QUARTERLY -->
+        <section class="schedule-option">
+          <input type="radio" class="custom-radio" name="scheduleType" id="quarterly">
+          <label for="quarterly">Quarterly</label>
+          <section class="sub-options" id="quarterlyOptions">
+            <div class="inline-fields">
+              <span class="input-label">Month:</span>
+              <div class="styled-input small">
+                <select class="styled-field">
+                  <option>January</option>
+                  <option>April</option>
+                  <option>July</option>
+                  <option>October</option>
+                </select>
+              </div>
+              <span class="input-label">Day:</span>
+              <div class="styled-input small">
+                <i class="fas fa-hashtag"></i>
+                <input type="number" class="styled-field" min="1" max="31">
+              </div>
+              <span class="input-label">Time:</span>
+              <div class="styled-input small">
+                <i class="fas fa-clock"></i>
+                <input type="time" class="styled-field">
+              </div>
+            </div>
+          </section>
+        </section>
+      </section>
+      <section id="bottom-buttons-container">
+        <button class="prev-step-btn">Previous</button>
+        <button class="next-step-btn">Next</button>
+      </section>
+    </section>
+    <!---------------------------------------------------- Step 3 ---------------------------------------------------->
+    <section id="step-3" class="step-content" style="display:none;">
+      <!-- Review -->
+      <h3>Review</h3>
+      <p>Review your scan configuration before running the scan.</p>
+      <section id="review-container">
+        <section id="scan-type-summary" class="summary-section">
+          <h3>1. Scan Type</h3>
+          <div class="summary-box scan-type-box">
+            <div class="scan-type-title">Transparent Box Testing</div>
+            <div class="scan-type-description">
+              Testers have full access to the system, including source code and
+              infrastructure, enabling the most thorough analysis in a shorter
+              time frame.
+            </div>
+          </div>
+        </section>
+
+        <section id="target-summary" class="summary-section">
+          <h3>2. Targets</h3>
+          <div class="summary-box summary-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>URL</th>
+                  <th>Label</th>
+                  <th>Created</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>https://example.com</td>
+                  <td>example-Site</td>
+                  <td>10/06/2025 &nbsp;&nbsp; 12:05</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section id="schedule-summary" class="summary-section">
+          <h3>3. Schedule</h3>
+          <div class="summary-box summary-card">
+            <div class="summary-item">
+              <i class="fas fa-calendar-alt"></i>
+              <div class="summary-text">
+                <div class="summary-label">Repeat</div>
+                <div class="summary-value">One Time</div>
+              </div>
+            </div>
+            <div class="summary-item">
+              <i class="fas fa-clock"></i>
+              <div class="summary-text">
+                <div class="summary-label">Start Time</div>
+                <div class="summary-value">Now</div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="bottom-buttons-container">
+          <button class="prev-step-btn">Previous</button>
+          <button id="run-scan-btn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Run Scan</button>
+        </section>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm Scan</h5>
+                <button type="button" class="close-btn" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to run the scan with the selected configuration?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn-submit">Confirm</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./js/new-scan.js"></script>
+</body>
+
+</html>
