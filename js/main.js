@@ -19,5 +19,5 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   // לכל הדפים נטען את הסקריפט הכללי
-  import("./scan-common.js");
+  import("./scripts.js");
 });

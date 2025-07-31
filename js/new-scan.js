@@ -1,5 +1,6 @@
 window.addEventListener("DOMContentLoaded", async () => {
-  const serverUrl = "http://localhost:3000/api";
+  // const serverUrl = 'http://localhost:3000/api';
+  const serverUrl = "https://sts-server-cjv3.onrender.com/api";
   const user = JSON.parse(sessionStorage.getItem("user"));
   if (!user) {
     console.error("User not found in session storage.");
@@ -37,7 +38,7 @@ window.addEventListener("DOMContentLoaded", async () => {
       const modal = bootstrap.Modal.getInstance(modalEl);
       modal?.hide(); // Close modal
 
-      await handleSubmitScan(userId);
+      await handleSubmitScan(userId, serverUrl);
     });
 
   // Prevent aria-hidden issues
@@ -139,7 +140,7 @@ const populateUrlsTable = (urls, urlsTableBody) => {
 };
 
 // 🔽 Called only when Confirm is pressed
-async function handleSubmitScan(userId) {
+async function handleSubmitScan(userId, serverUrl) {
   try {
     const { selectedUrls, scheduledFor } = collectScanFormData();
 
@@ -150,7 +151,7 @@ async function handleSubmitScan(userId) {
 
     await submitScansToServer(
       userId,
-      "http://localhost:3000/api",
+      serverUrl,
       selectedUrls,
       scheduledFor
     );
