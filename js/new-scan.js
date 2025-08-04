@@ -1,36 +1,76 @@
+let userId;
+const SERVER_URL = "https://sts-server-cjv3.onrender.com/api";
+// const SERVER_URL = 'http://localhost:3000/api'; // local
+
+// Main initialization function - runs when DOM is loaded
 window.addEventListener("DOMContentLoaded", async () => {
-  // const serverUrl = 'http://localhost:3000/api';
-  const serverUrl = "https://sts-server-cjv3.onrender.com/api";
+  // Initialize user session and validate authentication
+  if (!initializeUserSession()) return;
+  
+  // Get required DOM elements
+  const urlsTableBody = document.querySelector("#target-table tbody");
+  if (!validateRequiredElements(urlsTableBody)) return;
+
+  // Setup all UI interactions and event listeners
+  setupUserInterface();
+  
+  // Load and display existing URLs for the user
+  await loadUserUrls(urlsTableBody);
+});
+
+// Initialize user session and validate authentication
+// Returns: true if user is authenticated, false otherwise
+function initializeUserSession() {
   const user = JSON.parse(sessionStorage.getItem("user"));
   if (!user) {
     console.error("User not found in session storage.");
     window.location.href = "login.html";
-    return;
+    return false;
   }
+  
   userId = user.userId;
-  console.log("target-table:", document.getElementById("target-table"));
-  console.log("tbody:", document.querySelector("#target-table tbody"));
+  console.log("User authenticated:", userId);
+  return true;
+}
 
-  const urlsTableBody = document.querySelector("#target-table tbody");
+// Validate that required DOM elements exist
+// urlsTableBody: The table body element for URLs
+// Returns: True if all required elements exist
+function validateRequiredElements(urlsTableBody) {
   if (!urlsTableBody) {
     console.error("No #target-table tbody found in the DOM!");
-    return;
+    return false;
   }
+  return true;
+}
 
-  // Setup interactions
+// Setup all UI interactions and event listeners
+function setupUserInterface() {
+  // Setup form interactions
   setupScheduleTypeRadios();
   setupScheduleTimeToggle();
   setupNewScanButton();
   setupStepperNavigation();
   setupScanTypeCheckboxes();
+  
+  // Setup navigation and modal handlers
+  setupLogoutHandler();
+  setupConfirmModalHandler();
+  setupAddTargetModalHandler();
+  setupAccessibilityHandlers();
+}
 
+// Setup logout functionality
+function setupLogoutHandler() {
   document.getElementById("logout").addEventListener("click", function (e) {
     e.preventDefault();
     sessionStorage.removeItem("user");
     window.location.href = "login.html";
   });
+}
 
-  // Modal Confirm Button → Only then we submit
+// Setup confirm scan modal handler
+function setupConfirmModalHandler() {
   document
     .querySelector("#confirmRunModal .btn-submit")
     ?.addEventListener("click", async () => {
@@ -38,28 +78,36 @@ window.addEventListener("DOMContentLoaded", async () => {
       const modal = bootstrap.Modal.getInstance(modalEl);
       modal?.hide(); // Close modal
 
-      await handleSubmitScan(userId, serverUrl);
+      await handleSubmitScan(userId, SERVER_URL);
     });
+}
 
-  // Prevent aria-hidden issues
+// Setup accessibility handlers to prevent focus issues
+function setupAccessibilityHandlers() {
   document.querySelectorAll(".close-btn").forEach((btn) => {
     btn.addEventListener("click", () => btn.blur());
   });
+}
 
-  //URL table update
+// Load and display user's existing URLs in the table
+// Takes: urlsTableBody - the table element to fill with URL data
+async function loadUserUrls(urlsTableBody) {
   try {
-    const urlRes = await fetch(`${serverUrl}/urls/${userId}`);
-    if (!urlRes.ok) throw new Error("Failed to fetch scans");
+    const urlRes = await fetch(`${SERVER_URL}/urls/${userId}`);
+    if (!urlRes.ok) throw new Error("Failed to fetch URLs");
+    
     const urls = await urlRes.json();
-    console.log("Urls:", urls); // delete after debugging
+    console.log("Loaded URLs:", urls);
 
     populateUrlsTable(urls, urlsTableBody);
   } catch (err) {
-    console.error("Error fetching scans:", err);
-    tableError(urlsTableBody, "Failed to load urls.");
+    console.error("Error fetching URLs:", err);
+    tableError(urlsTableBody, "Failed to load URLs.");
   }
+}
 
-  // Add Target Modal Submit
+// Setup add target modal functionality
+function setupAddTargetModalHandler() {
   document
     .querySelector("#exampleModalCenter .btn-submit")
     ?.addEventListener("click", async () => {
@@ -77,7 +125,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
       // POST to backend
       try {
-        const res = await fetch(`${serverUrl}/urls`, {
+        const res = await fetch(`${SERVER_URL}/urls`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -87,7 +135,8 @@ window.addEventListener("DOMContentLoaded", async () => {
           }),
         });
         if (!res.ok) throw new Error("Failed to add target");
-        // Optionally close modal
+        
+        // Close modal
         const modalEl = document.getElementById("exampleModalCenter");
         const modal = bootstrap.Modal.getInstance(modalEl);
         modal?.hide();
@@ -97,37 +146,54 @@ window.addEventListener("DOMContentLoaded", async () => {
         labelInput.value = "";
 
         // Refresh table
-        const urlRes = await fetch(`${serverUrl}/urls/${userId}`);
+        const urlRes = await fetch(`${SERVER_URL}/urls/${userId}`);
         const urls = await urlRes.json();
         populateUrlsTable(urls, document.querySelector("#target-table tbody"));
       } catch (err) {
         alert("Error adding target: " + err.message);
       }
     });
-});
+}
 
+// Populate the URLs table with data from the server
 const populateUrlsTable = (urls, urlsTableBody) => {
   urlsTableBody.innerHTML = "";
+  
   // Sort by createdAt descending (newest first)
   urls.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  
   urls.forEach((urlObj) => {
     const row = document.createElement("tr");
     row.innerHTML = `
-            <th class="checkbox-th" scope="row">
-              <input class="form-check-input" type="checkbox">
-            </th>
-            <td class="url-cell">${urlObj.url || "—"}</td>
-            <td class="label-cell">${urlObj.label || "—"}</td>
-            <td class="date-cell">${new Date(urlObj.createdAt).toLocaleString(
-              "he-IL"
-            )}</td>
-        `;
+      <th class="checkbox-th" scope="row">
+        <input class="form-check-input" type="checkbox">
+      </th>
+      <td class="url-cell">${urlObj.url || "—"}</td>
+      <td class="label-cell">${urlObj.label || "—"}</td>
+      <td class="date-cell">${new Date(urlObj.createdAt).toLocaleString("he-IL")}</td>
+    `;
     urlsTableBody.appendChild(row);
   });
-  // Allow only one checkbox to be checked at a time
-  const checkboxes = urlsTableBody.querySelectorAll(
-    'input.form-check-input[type="checkbox"]'
-  );
+  
+  // Setup single checkbox selection behavior
+  setupSingleCheckboxSelection(urlsTableBody);
+};
+
+// Display error message in table when data loading fails
+function tableError(tableBody, message) {
+  tableBody.innerHTML = `
+    <tr>
+      <td colspan="4" class="text-center text-danger">
+        ${message}
+      </td>
+    </tr>
+  `;
+}
+
+// Setup single checkbox selection behavior for the URLs table
+function setupSingleCheckboxSelection(urlsTableBody) {
+  const checkboxes = urlsTableBody.querySelectorAll('input.form-check-input[type="checkbox"]');
+  
   checkboxes.forEach((checkbox) => {
     checkbox.addEventListener("change", function () {
       if (this.checked) {
@@ -137,9 +203,15 @@ const populateUrlsTable = (urls, urlsTableBody) => {
       }
     });
   });
-};
+}
 
-// 🔽 Called only when Confirm is pressed
+// =============================================================================
+// SCAN SUBMISSION FUNCTIONS
+// =============================================================================
+
+// Handle scan submission when Confirm button is pressed
+// userId: number - User ID for the scan
+// serverUrl: string - Server URL for API calls
 async function handleSubmitScan(userId, serverUrl) {
   try {
     const { selectedUrls, scheduledFor } = collectScanFormData();
@@ -149,24 +221,19 @@ async function handleSubmitScan(userId, serverUrl) {
       return;
     }
 
-    await submitScansToServer(
-      userId,
-      serverUrl,
-      selectedUrls,
-      scheduledFor
-    );
+    await submitScansToServer(userId, serverUrl, selectedUrls, scheduledFor);
     alert("Scans submitted successfully!");
     console.log("Scans submitted successfully!");
-    window.location.href = "index.html"; // ✅ Redirect
+    window.location.href = "index.html"; // Redirect to dashboard
   } catch (err) {
     console.error("Scan submission failed:", err);
     alert("Failed to submit scans. Please try again.");
   }
 }
 
-// 🔽 Collect selected test types, URLs, schedule
+// Collect selected test types, URLs, and schedule information from the form
 function collectScanFormData() {
-  // Targets selected
+  // Get selected target URLs
   const selectedTargetRows = Array.from(
     document.querySelectorAll("#target-table tbody tr")
   ).filter((row) => row.querySelector("input.form-check-input:checked"));
@@ -176,34 +243,41 @@ function collectScanFormData() {
     label: row.querySelector(".label-cell")?.textContent.trim(),
   }));
 
-  // Schedule
-  const scheduleType = document.querySelector(
-    'input[name="scheduleType"]:checked'
-  )?.id;
+  // Get schedule information
+  const scheduleType = document.querySelector('input[name="scheduleType"]:checked')?.id;
   let scheduledFor = null;
 
-  if (scheduleType === "scheduled") {
-    const time = document.querySelector('#step-2 input[type="time"]')?.value;
-    const date = document.querySelector('#step-2 input[type="date"]')?.value;
-    if (time && date) {
-      scheduledFor = new Date(`${date}T${time}`).toISOString();
+  // Check if it's oneTime and scheduled (not "now")
+  if (scheduleType === "oneTime") {
+    const scheduledRadio = document.getElementById("scheduled");
+    if (scheduledRadio && scheduledRadio.checked) {
+      const time = document.querySelector('#oneTimeOptions input[type="time"]')?.value;
+      const date = document.querySelector('#oneTimeOptions input[type="date"]')?.value;
+      if (time && date) {
+        scheduledFor = new Date(`${date}T${time}`).toISOString();
+      }
     }
+    // If "now" radio is checked, scheduledFor remains null
+  } else if (scheduleType && scheduleType !== "oneTime") {
+    // For other schedule types (daily, weekly, monthly, quarterly)
+    // These are always scheduled, so we need to set a future time
+    // For now, we'll set scheduledFor to indicate it's scheduled
+    scheduledFor = new Date(Date.now() + 60000).toISOString(); // 1 minute from now as placeholder
   }
 
   return { selectedUrls, scheduledFor };
 }
 
-async function submitScansToServer(
-  userId,
-  serverUrl,
-  selectedUrls,
-  scheduledFor
-) {
+// Submit scans to the server for each selected URL
+async function submitScansToServer(userId, serverUrl, selectedUrls, scheduledFor) {
+  // Fetch all user URLs to match against selected ones
   const res = await fetch(`${serverUrl}/urls/${userId}`);
   if (!res.ok) throw new Error("Failed to fetch user URLs");
 
   const urls = await res.json();
   console.log("Fetched URLs:", urls); // Debugging
+
+  // Process each selected URL
   for (const target of selectedUrls) {
     const match = urls.find((u) => u.url === target.url);
     if (!match) {
@@ -229,13 +303,13 @@ async function submitScansToServer(
     }
 
     const scanResponse = await scanRes.json();
-    const scan = scanResponse.scan; // ✅ because server returns { message, scan }
+    const scan = scanResponse.scan; // Server returns { message, scan }
 
-    // If scheduledFor is null → run immediately
+    // Only run scan immediately if it's scheduled for "Now" (scheduledFor is null)
     if (!scheduledFor) {
       console.log("Running immediate scan for:", scan.scanId);
 
-      // Post results
+      // Post results for immediate scan
       const resultRes = await fetch(`${serverUrl}/results`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -250,7 +324,7 @@ async function submitScansToServer(
         continue;
       }
 
-      // Update status to completed
+      // Update status to completed for immediate scan
       const updateRes = await fetch(
         `${serverUrl}/scans/${scan.scanId}/status`,
         {
@@ -263,10 +337,18 @@ async function submitScansToServer(
       if (!updateRes.ok) {
         console.error(`Failed to update scan status for ${scan.scanId}`);
       }
+    } else {
+      // For scheduled scans, just log that they were scheduled
+      console.log(`Scan scheduled for ${scheduledFor}:`, scan.scanId);
     }
   }
 }
 
+// =============================================================================
+// UI SETUP AND EVENT HANDLERS
+// =============================================================================
+
+// Setup scan type checkboxes to allow only single selection
 function setupScanTypeCheckboxes() {
   const checkboxes = document.querySelectorAll(
     '#checkbox-list input[type="checkbox"]'
@@ -282,18 +364,22 @@ function setupScanTypeCheckboxes() {
   });
 }
 
-// 🔽 Show/hide schedule sub-sections
+// Setup schedule type radio buttons to show/hide schedule sub-sections
 function setupScheduleTypeRadios() {
   const radios = document.querySelectorAll('input[name="scheduleType"]');
   const allOptions = document.querySelectorAll(".sub-options");
 
+  // Initially hide all options
   allOptions.forEach((opt) => (opt.style.display = "none"));
+  
+  // Show options for currently checked radio
   const checked = document.querySelector('input[name="scheduleType"]:checked');
   if (checked) {
     const section = document.getElementById(checked.id + "Options");
     if (section) section.style.display = "block";
   }
 
+  // Add change listeners to all radios
   radios.forEach((radio) => {
     radio.addEventListener("change", () => {
       allOptions.forEach((opt) => (opt.style.display = "none"));
@@ -303,7 +389,7 @@ function setupScheduleTypeRadios() {
   });
 }
 
-// 🔽 Enable/disable time picker based on OneTime → Now vs Scheduled
+// Enable/disable time picker based on OneTime → Now vs Scheduled selection
 function setupScheduleTimeToggle() {
   const nowRadio = document.getElementById("now");
   const scheduledRadio = document.getElementById("scheduled");
@@ -320,6 +406,7 @@ function setupScheduleTimeToggle() {
       dateInput.disabled = false;
     });
 
+    // Set initial state
     if (nowRadio.checked) {
       timeInput.disabled = true;
       dateInput.disabled = true;
@@ -327,75 +414,41 @@ function setupScheduleTimeToggle() {
   }
 }
 
-// 🔽 Image hover effect on New Scan nav button
+// Setup hover effect on New Scan navigation button
 function setupNewScanButton() {
   const newScanBtn = document.getElementById("selected-new-scan");
   const newScanImg = document.getElementById("new-scan-img");
-  let isSelected = true;
 
   if (newScanBtn && newScanImg) {
-    const updateImg = () => {
-      newScanImg.src = isSelected
-        ? "./images/new_scan.png"
-        : "./images/new_scan_yellow.png";
-    };
-
-    updateImg();
+    // Set initial state to regular image
+    newScanImg.src = "./images/new_scan.png";
+    
+    // Hover effects - change to yellow on hover
     newScanBtn.addEventListener("mouseenter", () => {
-      newScanImg.src = isSelected
-        ? "./images/new_scan_yellow.png"
-        : "./images/new_scan.png";
+      newScanImg.src = "./images/new_scan_yellow.png";
     });
-    newScanBtn.addEventListener("mouseleave", updateImg);
+    
+    newScanBtn.addEventListener("mouseleave", () => {
+      newScanImg.src = "./images/new_scan.png"; // Back to regular image
+    });
+    
+    // Click behavior - scroll to top since we're already on the page
     newScanBtn.addEventListener("click", () => {
-      isSelected = true;
-      updateImg();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 }
 
-// 🔽 Stepper navigation logic
+// =============================================================================
+// STEPPER NAVIGATION FUNCTIONS
+// =============================================================================
+
+// Setup stepper navigation with previous/next functionality
 function setupStepperNavigation() {
   let currentStep = 1;
   const totalSteps = 3;
 
-  function showStep(step) {
-    for (let i = 1; i <= totalSteps; i++) {
-      const section = document.getElementById(`step-${i}`);
-      const stepper = document.getElementById(`stepper-${i}`);
-      const line = stepper?.querySelector(".line");
-
-      if (section) {
-        section.style.display = i === step ? "flex" : "none";
-        section.classList.toggle("active-step", i === step);
-      }
-      if (stepper) stepper.classList.toggle("active", i === step);
-      if (line) line.classList.toggle("active", i <= step);
-    }
-    currentStep = step;
-    // When entering step 3, update the review
-    if (step === 3) updateReviewSection();
-  }
-
-  showStep(1);
-
-  document.querySelectorAll(".next-step-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      showStep(Math.min(currentStep + 1, totalSteps));
-    });
-  });
-
-  document.querySelectorAll(".prev-step-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      showStep(Math.max(currentStep - 1, 1));
-    });
-  });
-}
-
-function setupStepperNavigation() {
-  let currentStep = 1;
-  const totalSteps = 3;
-
+  // Show the specified step and update UI accordingly
   function showStep(step) {
     for (let i = 1; i <= totalSteps; i++) {
       const section = document.getElementById(`step-${i}`);
@@ -411,18 +464,21 @@ function setupStepperNavigation() {
     }
     currentStep = step;
 
-    // When entering step 3, update the review
+    // When entering step 3 (review), update the review section
     if (step === 3) updateReviewSection();
   }
 
+  // Initialize to first step
   showStep(1);
 
+  // Setup next step buttons
   document.querySelectorAll(".next-step-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       showStep(Math.min(currentStep + 1, totalSteps));
     });
   });
 
+  // Setup previous step buttons
   document.querySelectorAll(".prev-step-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       showStep(Math.max(currentStep - 1, 1));
@@ -430,9 +486,15 @@ function setupStepperNavigation() {
   });
 }
 
-// Add this function to update the review section
+// Update the review section (step 3) with current form data
 function updateReviewSection() {
-  // 1. Scan Type
+  updateScanTypeReview();
+  updateTargetsReview();
+  updateScheduleReview();
+}
+
+// Update scan type information in review section
+function updateScanTypeReview() {
   const scanTypeMap = {
     defaultCheck1: {
       title: "Opaque Box Testing",
@@ -447,19 +509,25 @@ function updateReviewSection() {
       desc: "Transparent box: full access to system internals",
     },
   };
+  
   const checkedScan = Array.from(
     document.querySelectorAll('#checkbox-list input[type="checkbox"]')
   ).find((cb) => cb.checked);
+  
   const scanType = scanTypeMap[checkedScan?.id] || { title: "—", desc: "" };
   document.querySelector(".scan-type-title").textContent = scanType.title;
   document.querySelector(".scan-type-description").textContent = scanType.desc;
+}
 
-  // 2. Targets
+// Update targets information in review section
+function updateTargetsReview() {
   const selectedRows = Array.from(
     document.querySelectorAll("#target-table tbody tr")
   ).filter((row) => row.querySelector('input[type="checkbox"]').checked);
+  
   const tbody = document.querySelector("#target-summary tbody");
   tbody.innerHTML = "";
+  
   selectedRows.forEach((row) => {
     const url = row.querySelector(".url-cell")?.textContent || "";
     const label = row.querySelector(".label-cell")?.textContent || "";
@@ -468,26 +536,27 @@ function updateReviewSection() {
     tr.innerHTML = `<td>${url}</td><td>${label}</td><td>${date}</td>`;
     tbody.appendChild(tr);
   });
+  
   if (selectedRows.length === 0) {
     tbody.innerHTML = '<tr><td colspan="3">No targets selected</td></tr>';
   }
-  // 3. Schedule
-  const scheduleType = document.querySelector(
-    'input[name="scheduleType"]:checked'
-  );
-  let repeat = "—",
-    startTime = "—";
+}
+
+// Update schedule information in review section
+function updateScheduleReview() {
+  const scheduleType = document.querySelector('input[name="scheduleType"]:checked');
+  let repeat = "—";
+  let startTime = "—";
+  
   if (scheduleType) {
     repeat = scheduleType.labels[0].textContent;
+    
     if (scheduleType.id === "oneTime") {
       const nowRadio = document.getElementById("now");
       const scheduledRadio = document.getElementById("scheduled");
-      const time = document.querySelector(
-        '#oneTimeOptions input[type="time"]'
-      )?.value;
-      const date = document.querySelector(
-        '#oneTimeOptions input[type="date"]'
-      )?.value;
+      const time = document.querySelector('#oneTimeOptions input[type="time"]')?.value;
+      const date = document.querySelector('#oneTimeOptions input[type="date"]')?.value;
+      
       if (nowRadio.checked) {
         startTime = "Now";
       } else if (scheduledRadio.checked && date && time) {
@@ -496,47 +565,28 @@ function updateReviewSection() {
         startTime = "Scheduled (missing date/time)";
       }
     } else if (scheduleType.id === "daily") {
-      const time = document.querySelector(
-        '#dailyOptions input[type="time"]'
-      )?.value;
-      const days = document.querySelector(
-        '#dailyOptions input[type="number"]'
-      )?.value;
+      const time = document.querySelector('#dailyOptions input[type="time"]')?.value;
+      const days = document.querySelector('#dailyOptions input[type="number"]')?.value;
       startTime = time ? `Every ${days || 1} day(s) at ${time}` : "—";
     } else if (scheduleType.id === "weekly") {
-      const time = document.querySelector(
-        '#weeklyOptions input[type="time"]'
-      )?.value;
+      const time = document.querySelector('#weeklyOptions input[type="time"]')?.value;
       const days = Array.from(
-        document.querySelectorAll(
-          '#weeklyOptions input[type="checkbox"]:checked'
-        )
-      )
-        .map((cb) => cb.value)
-        .join(", ");
+        document.querySelectorAll('#weeklyOptions input[type="checkbox"]:checked')
+      ).map((cb) => cb.value).join(", ");
       startTime = time ? `Weekly on ${days} at ${time}` : "—";
     } else if (scheduleType.id === "monthly") {
-      const day = document.querySelector(
-        '#monthlyOptions input[type="number"]'
-      )?.value;
-      const time = document.querySelector(
-        '#monthlyOptions input[type="time"]'
-      )?.value;
+      const day = document.querySelector('#monthlyOptions input[type="number"]')?.value;
+      const time = document.querySelector('#monthlyOptions input[type="time"]')?.value;
       startTime = day && time ? `Day ${day} at ${time}` : "—";
     } else if (scheduleType.id === "quarterly") {
       const month = document.querySelector("#quarterlyOptions select")?.value;
-      const day = document.querySelector(
-        '#quarterlyOptions input[type="number"]'
-      )?.value;
-      const time = document.querySelector(
-        '#quarterlyOptions input[type="time"]'
-      )?.value;
+      const day = document.querySelector('#quarterlyOptions input[type="number"]')?.value;
+      const time = document.querySelector('#quarterlyOptions input[type="time"]')?.value;
       startTime = month && day && time ? `${month} ${day} at ${time}` : "—";
     }
   }
-  document.querySelector("#schedule-summary .summary-value").textContent =
-    repeat;
-  document
-    .querySelectorAll("#schedule-summary .summary-item")[1]
+  
+  document.querySelector("#schedule-summary .summary-value").textContent = repeat;
+  document.querySelectorAll("#schedule-summary .summary-item")[1]
     .querySelector(".summary-value").textContent = startTime;
 }

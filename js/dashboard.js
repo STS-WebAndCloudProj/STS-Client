@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  // const serverUrl = 'http://localhost:3000/api';
-  const serverUrl = 'https://sts-server-cjv3.onrender.com/api';
+  const serverUrl = 'http://localhost:3000/api';
+  // const serverUrl = 'https://sts-server-cjv3.onrender.com/api';
   const user = JSON.parse(sessionStorage.getItem("user"));
   if (!user) {
     console.error("User not found in session storage.");
@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
   userId = user.userId; 
+  
+  // Setup New Scan button functionality
+  setupNewScanButton();
   
   const scansTableBody = document.querySelector("#scansTable tbody");
   const risksTableBody = document.querySelector("#risksTable tbody");
@@ -95,7 +98,7 @@ const populateThreatsTable = (results, risksTableBody, count = 7) => {
     row.innerHTML = `
       <td>${threat.threat || "—"}</td>
       <td>${threat.vulnerability || "—"}</td>
-      <td><span class="severity ${sevKey}"></span> ${threat.severity || "—"}</td>
+      <td><span class="severity-dot ${sevKey}"></span>${threat.severity || "—"}</td>
       <td>${threat.url || "—"}</td>
     `;
     risksTableBody.appendChild(row);
@@ -104,24 +107,68 @@ const populateThreatsTable = (results, risksTableBody, count = 7) => {
 
 const populateScansTable = (scans, scansTableBody, urlIdToUrl) => {
   scansTableBody.innerHTML = '';
-  const sortedScans = scans.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  const lastScans = sortedScans.slice(0, 5);
-  lastScans.forEach(urlObj => {
+  
+  // Collect all individual scans from all URLs
+  const allScans = [];
+  scans.forEach(urlObj => {
     if (Array.isArray(urlObj.scans)) {
       urlObj.scans.forEach(scan => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${urlObj.url || "—"}</td>
-          <td>${scan.status || "—"}</td>
-          <td>${new Date(scan.createdAt).toLocaleString('he-IL')}</td>
-        `;
-        scansTableBody.appendChild(row);
+        allScans.push({
+          url: urlObj.url || "—",
+          status: scan.status || "—",
+          createdAt: scan.createdAt
+        });
       });
     }
+  });
+  
+  // Sort all scans by creation date (newest first) and take only the last 7
+  const sortedScans = allScans.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  const last7Scans = sortedScans.slice(0, 7);
+  
+  // Populate table with the 7 most recent scans
+  last7Scans.forEach(scan => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${scan.url}</td>
+      <td>${scan.status}</td>
+      <td>${new Date(scan.createdAt).toLocaleString('he-IL')}</td>
+    `;
+    scansTableBody.appendChild(row);
   });
 }
 
 const tableError = (tableBody, message) => {
   tableBody.innerHTML = `<tr><td colspan="4">${message}</td></tr>`;
+}
+
+// Setup hover effect and navigation for New Scan button
+function setupNewScanButton() {
+  const newScanBtn = document.getElementById("new-scan-btn");
+  const newScanImg = document.getElementById("new-scan-img");
+  let isSelected = false; // Dashboard is not the new scan page
+
+  if (newScanBtn && newScanImg) {
+    const updateImg = () => {
+      newScanImg.src = isSelected
+        ? "./images/new_scan_yellow.png"
+        : "./images/new_scan.png";
+    };
+
+    // Set initial state
+    updateImg();
+    
+    // Hover effects
+    newScanBtn.addEventListener("mouseenter", () => {
+      newScanImg.src = "./images/new_scan_yellow.png";
+    });
+    
+    newScanBtn.addEventListener("mouseleave", updateImg);
+    
+    // Click navigation
+    newScanBtn.addEventListener("click", () => {
+      window.location.href = "new_scan.html";
+    });
+  }
 }
 

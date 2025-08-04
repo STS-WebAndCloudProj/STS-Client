@@ -3,6 +3,9 @@
     padding: 0;
     font-family: Poppins;
     text-decoration: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 header,
@@ -413,6 +416,22 @@ main h3 {
 
 table td {
     white-space: nowrap;
+}
+
+/* Table hover styles - override Bootstrap's gray hover with blue */
+.table-hover tbody tr:hover td,
+.table-hover tbody tr:hover th {
+    background-color: rgba(65, 125, 200, 0.08) !important; /* Very light, transparent blue hover */
+}
+
+#scan-table .table-hover tbody tr:hover td,
+#scan-table .table-hover tbody tr:hover th,
+#results-table .table-hover tbody tr:hover td,
+#results-table .table-hover tbody tr:hover th,
+#target-table .table-hover tbody tr:hover td,
+#target-table .table-hover tbody tr:hover th {
+    background-color: rgba(65, 125, 200, 0.08) !important; /* Very light, transparent blue hover */
+    color: #182b4e !important;
 }
 
 .severity-dot {

@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // const serverUrl = 'http://localhost:3000/api';
-  const serverUrl = "https://sts-server-cjv3.onrender.com/api";
+  const serverUrl = 'http://localhost:3000/api';
+  // const serverUrl = "https://sts-server-cjv3.onrender.com/api";
   const loginForm = document.querySelector("form");
   const emailInput = loginForm.querySelector('input[type="email"]');
   const passwordInput = loginForm.querySelector('input[type="password"]');
@@ -29,14 +29,19 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
 
       if (response.ok) {
+        // Optionally check status in response
+        if (data.user && data.user.status && data.user.status !== "active") {
+          showAlert(`Your account status is '${data.user.status}'. Access denied.`, "danger");
+          return;
+        }
         showAlert("Login successful! Redirecting...", "success");
         sessionStorage.setItem("user", JSON.stringify(data.user));
-
         setTimeout(() => {
           window.location.href = "index.html";
         }, 1500);
       } else {
-        const message = data.message || "Login failed. Please try again.";
+        // Show message if backend sent a status denial
+        const message = data.message || data.error || "Login failed. Please try again.";
         showAlert(message, "danger");
       }
     } catch (error) {
@@ -51,14 +56,12 @@ document.addEventListener("DOMContentLoaded", () => {
   function showAlert(message, type) {
     const icon =
       type === "success" ? "#check-circle-fill" : "#exclamation-triangle-fill";
-
     alertContainer.innerHTML = `
             <div class="alert alert-${type} d-flex align-items-center shadow" role="alert">
                 <svg class="bi flex-shrink-0 me-2" role="img" aria-label="${type}"><use xlink:href="${icon}"/></svg>
                 <div>${message}</div>
             </div>
         `;
-
     setTimeout(() => {
       alertContainer.innerHTML = "";
     }, 4000);
