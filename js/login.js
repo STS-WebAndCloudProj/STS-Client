@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const serverUrl = 'http://localhost:3000/api';
-  // const serverUrl = "https://sts-server-cjv3.onrender.com/api";
+  // const serverUrl = 'http://localhost:3000/api';
+  const serverUrl = "https://sts-server-cjv3.onrender.com/api";
   const loginForm = document.querySelector("form");
   const emailInput = loginForm.querySelector('input[type="email"]');
   const passwordInput = loginForm.querySelector('input[type="password"]');

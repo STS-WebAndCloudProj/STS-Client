@@ -1,6 +1,6 @@
 let userId;
 const SERVER_URL = "https://sts-server-cjv3.onrender.com/api";
-// const SERVER_URL = 'http://localhost:3000/api'; // local
+// const SERVER_URL = 'http://localhost:3000/api'; // For local development
 
 // Main initialization function - runs when DOM is loaded
 window.addEventListener("DOMContentLoaded", async () => {
