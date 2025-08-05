@@ -1307,3 +1307,10 @@ input[type="number"] {
     flex-flow: column;
     height: 100%;
 }
+
+
+/* ADMIN PAGES */
+
+.admin-bg {
+    background: #182b4e;
+}
