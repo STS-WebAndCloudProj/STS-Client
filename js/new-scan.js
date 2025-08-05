@@ -1,6 +1,6 @@
 let userId;
-// const SERVER_URL = "https://sts-server-cjv3.onrender.com/api";
-const SERVER_URL = 'http://localhost:3000/api'; // For local development
+const SERVER_URL = "https://sts-server-cjv3.onrender.com/api";
+// const SERVER_URL = 'http://localhost:3000/api'; // For local development
 
 // Alert function to display Bootstrap-styled alerts
 function showAlert(message, type) {
