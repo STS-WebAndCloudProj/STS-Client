@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // const serverUrl = 'http://localhost:3000/api';
-  const serverUrl = "https://sts-server-cjv3.onrender.com/api";
+  const serverUrl = 'http://localhost:3000/api';
+  // const serverUrl = "https://sts-server-cjv3.onrender.com/api";
   const loginForm = document.querySelector("form");
   const emailInput = loginForm.querySelector('input[type="email"]');
   const passwordInput = loginForm.querySelector('input[type="password"]');
@@ -54,14 +54,19 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function showAlert(message, type) {
-    const icon =
-      type === "success" ? "#check-circle-fill" : "#exclamation-triangle-fill";
+    if (!alertContainer) {
+      console.error("Alert container not found!");
+      alert(message); // Fallback to regular alert
+      return;
+    }
+    
+    const icon = type === "success" ? "bi-check-circle-fill" : "bi-exclamation-triangle-fill";
     alertContainer.innerHTML = `
-            <div class="alert alert-${type} d-flex align-items-center shadow" role="alert">
-                <svg class="bi flex-shrink-0 me-2" role="img" aria-label="${type}"><use xlink:href="${icon}"/></svg>
-                <div>${message}</div>
-            </div>
-        `;
+      <div class="alert alert-${type} d-flex align-items-center shadow" role="alert">
+        <i class="bi ${icon} flex-shrink-0 me-2" role="img" aria-label="${type}"></i>
+        <div>${message}</div>
+      </div>
+    `;
     setTimeout(() => {
       alertContainer.innerHTML = "";
     }, 4000);

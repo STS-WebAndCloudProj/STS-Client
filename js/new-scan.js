@@ -1,6 +1,27 @@
 let userId;
-const SERVER_URL = "https://sts-server-cjv3.onrender.com/api";
-// const SERVER_URL = 'http://localhost:3000/api'; // For local development
+// const SERVER_URL = "https://sts-server-cjv3.onrender.com/api";
+const SERVER_URL = 'http://localhost:3000/api'; // For local development
+
+// Alert function to display Bootstrap-styled alerts
+function showAlert(message, type) {
+  const alertContainer = document.getElementById("alertContainer");
+  if (!alertContainer) {
+    console.error("Alert container not found!");
+    alert(message); // Fallback to regular alert
+    return;
+  }
+  
+  const icon = type === "success" ? "bi-check-circle-fill" : "bi-exclamation-triangle-fill";
+  alertContainer.innerHTML = `
+    <div class="alert alert-${type} d-flex align-items-center shadow" role="alert" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; width: auto; max-width: 500px;">
+      <i class="bi ${icon} flex-shrink-0 me-2" role="img" aria-label="${type}"></i>
+      <div>${message}</div>
+    </div>
+  `;
+  setTimeout(() => {
+    alertContainer.innerHTML = "";
+  }, 4000);
+}
 
 // Main initialization function - runs when DOM is loaded
 window.addEventListener("DOMContentLoaded", async () => {
@@ -117,7 +138,7 @@ function setupAddTargetModalHandler() {
       const label = labelInput.value.trim();
 
       if (!url) {
-        alert('Please enter a valid URL.');
+        showAlert('Please enter a valid URL.', 'danger');
         urlInput.classList.add("is-invalid");
         return;
       } else {
@@ -139,7 +160,7 @@ function setupAddTargetModalHandler() {
         if (!res.ok) {
           // If the backend rejects the URL, display an error message
           const errorData = await res.json();
-          alert(`Error: ${errorData.error}`);
+          showAlert(`Error: ${errorData.error}`, 'danger');
           console.error('Threats:', errorData.threats);
           return;
         }
@@ -159,7 +180,7 @@ function setupAddTargetModalHandler() {
         populateUrlsTable(urls, document.querySelector("#target-table tbody"));
       } catch (error) {
         console.error('Error adding URL:', error);
-        alert('Failed to add URL. Please try again later.');
+        showAlert('Failed to add URL. Please try again later.', 'danger');
       }
     });
 }
@@ -226,17 +247,19 @@ async function handleSubmitScan(userId, serverUrl) {
     const { selectedUrls, scheduledFor } = collectScanFormData();
 
     if (selectedUrls.length === 0) {
-      alert("Please select at least one target URL.");
+      showAlert("Please select at least one target URL.", "danger");
       return;
     }
 
     await submitScansToServer(userId, serverUrl, selectedUrls, scheduledFor);
-    alert("Scans submitted successfully!");
+    showAlert("Scans submitted successfully!", "success");
     console.log("Scans submitted successfully!");
-    window.location.href = "index.html"; // Redirect to dashboard
+    setTimeout(() => {
+      window.location.href = "index.html"; // Redirect to dashboard
+    }, 1500);
   } catch (err) {
     console.error("Scan submission failed:", err);
-    alert("Failed to submit scans. Please try again.");
+    showAlert("Failed to submit scans. Please try again.", "danger");
   }
 }
 
