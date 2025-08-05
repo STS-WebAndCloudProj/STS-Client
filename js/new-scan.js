@@ -106,7 +106,7 @@ async function loadUserUrls(urlsTableBody) {
   }
 }
 
-// Setup add target modal functionality
+// Setup add target modal functionality with URL validation
 function setupAddTargetModalHandler() {
   document
     .querySelector("#exampleModalCenter .btn-submit")
@@ -117,14 +117,15 @@ function setupAddTargetModalHandler() {
       const label = labelInput.value.trim();
 
       if (!url) {
+        alert('Please enter a valid URL.');
         urlInput.classList.add("is-invalid");
         return;
       } else {
         urlInput.classList.remove("is-invalid");
       }
 
-      // POST to backend
       try {
+        // Make an API call to validate and add the URL
         const res = await fetch(`${SERVER_URL}/urls`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -134,9 +135,16 @@ function setupAddTargetModalHandler() {
             label,
           }),
         });
-        if (!res.ok) throw new Error("Failed to add target");
-        
-        // Close modal
+
+        if (!res.ok) {
+          // If the backend rejects the URL, display an error message
+          const errorData = await res.json();
+          alert(`Error: ${errorData.error}`);
+          console.error('Threats:', errorData.threats);
+          return;
+        }
+
+        // If the URL is safe, close modal and clear inputs
         const modalEl = document.getElementById("exampleModalCenter");
         const modal = bootstrap.Modal.getInstance(modalEl);
         modal?.hide();
@@ -145,12 +153,13 @@ function setupAddTargetModalHandler() {
         urlInput.value = "";
         labelInput.value = "";
 
-        // Refresh table
+        // Refresh table to show the new URL
         const urlRes = await fetch(`${SERVER_URL}/urls/${userId}`);
         const urls = await urlRes.json();
         populateUrlsTable(urls, document.querySelector("#target-table tbody"));
-      } catch (err) {
-        alert("Error adding target: " + err.message);
+      } catch (error) {
+        console.error('Error adding URL:', error);
+        alert('Failed to add URL. Please try again later.');
       }
     });
 }
