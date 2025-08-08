@@ -24,17 +24,20 @@
 
 <body>
   <nav>
-    <a href="index.html" id="logo"></a>
+    <a href="adminOverview.html" id="logo"></a>
     <ul>
-      <li><a href="overview.html"><img src="./images/admin_console_white.svg" /> Overview</a></li>
-      <li><a class="selected" href="#"><img src="./images/Users_yellow.svg" /> Users</a></li>
+      <li><a href="adminOverview.html" class="underline"><img id="dash-img"
+            src="./images/admin_console_white.svg"><span>Overview</span></a></li>
+      <li>
+        <a href="#" class="selected"><img id="selected-dash-img" src="./images/Users_yellow.svg"/><span>Users</span></a>
+      </li>
     </ul>
-    <a id="logout" class="underline" href="#"><img id="logout-img" src="./images/logout.png"><span>Logout</span></a>
+    <a id="logout" class="underline" href="#"><img id="logout-img" src="./images/logout.png" /><span>Logout</span></a>
   </nav>
+
 
   <main>
     <h2>Users</h2>
-
     <section id="admin-custom-cards">
       <section class="custom-card admin-bg">
         <section class="custom-card-header"></section>
@@ -67,39 +70,36 @@
             <i class="fas fa-search"></i>
             <input type="text" class="form-control custom-search" placeholder="Search by email">
           </div>
-          <div class="search-box" id="label-search">
-            <i class="fas fa-search"></i>
-            <select id="statusFilter" class="form-control custom-search">
-              <option selected disabled>Status</option>
-              <option value="active">Active</option>
-              <option value="suspended">Suspended</option>
-              <option value="disabled">Disabled</option>
-              <option value="inactive">Inactive</option>
-            </select>
-          </div>
         </div>
       </div>
-
-
-
-
-
       <div id="user-table">
         <table id="usersTable" class="table table-hover table-responsive">
           <thead>
             <tr>
               <th scope="col">Email</th>
-              <th scope="col">Status</th>
+              <th scope="col">
+                <div class="dropdown">
+                  <button class="dropdown-toggle status-dropdown-toggle">Status</button>
+                  <ul class="dropdown-menu">
+                    <li class="status-list">Active</li>
+                    <li class="status-list">Suspended</li>
+                    <li class="status-list">Disabled</li>
+                    <li class="status-list">Inactive</li>
+                  </ul>
+                </div>
+              </th>
               <th scope="col">Sites</th>
               <th scope="col">Last Login</th>
               <th scope="col">Actions</th>
             </tr>
+            <!-- <th scope="col">Statys>
+                
+              </td> -->
           </thead>
           <tbody>
             <tr data-status="active" data-plan="pro">
               <td>evan@example.com</td>
               <td><span class="badge active">Active</span></td>
-
               <td>5</td>
               <td>10/06/2025</td>
               <td>
@@ -141,7 +141,6 @@
                   </ul>
                 </div>
               </td>
-
             </tr>
             <tr data-status="disabled" data-plan="free">
               <td>jennie@example.com</td>
@@ -164,7 +163,6 @@
                   </ul>
                 </div>
               </td>
-
             </tr>
             <tr data-status="inactive" data-plan="free">
               <td>jennie@example.com</td>
@@ -186,7 +184,6 @@
                   </ul>
                 </div>
               </td>
-
             </tr>
             <tr data-status="active" data-plan="free">
               <td>jennie@example.com</td>
@@ -205,17 +202,15 @@
                           width="16" class="me-2" />Suspend Account</a></li>
                     <li><a href="#"><img src="./images/delete_user.svg" alt="Suspend" width="16" class="me-2" />Delete
                         User</a></li>
-
                   </ul>
                 </div>
               </td>
-
             </tr>
           </tbody>
         </table>
       </div>
       <!-- Pagination -->
-      <section id="pagination-container">
+      <!-- <section id="pagination-container">
         <nav class="pagination-nav" aria-label="Page navigation example">
           <ul class="pagination">
             <li class="page-item">
@@ -235,7 +230,7 @@
             </li>
           </ul>
         </nav>
-      </section>
+      </section> -->
       <!-- Modal להשעיית משתמש -->
       <div class="modal fade" id="suspendUserModal" tabindex="-1" aria-labelledby="suspendUserLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -244,14 +239,12 @@
               <h5 class="modal-title fw-bold" id="suspendUserLabel">Suspend User Account</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-
             <div class="modal-body">
               <p>Are you sure you want to suspend the following user?</p>
               <p class="fw-bold mb-0" id="suspendUserName">[User Name]</p>
               <p class="text-muted" id="suspendUserEmail">[User Email]</p>
               <p class="small">Suspending a user will temporarily disable their access to the system. They will not be
                 able to log in or use their sites until reactivated.</p>
-
               <div class="mb-3">
                 <label class="form-label d-block fw-semibold">Duration:</label>
                 <div class="form-check form-check-inline">
@@ -267,13 +260,11 @@
                   <label class="form-check-label" for="suspend60">60 days</label>
                 </div>
               </div>
-
               <div class="mb-3">
                 <label for="suspendReason" class="form-label">Reason For Suspension:</label>
                 <textarea class="form-control" id="suspendReason" rows="3" placeholder="Enter reason..."></textarea>
               </div>
             </div>
-
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" id="suspendBtn">Suspend</button>
               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -292,12 +283,6 @@
           </div>
         </div>
       </div>
-
-
-
-
-
-
       <!-- Bootstrap JS -->
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
