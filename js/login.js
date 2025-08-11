@@ -34,11 +34,22 @@ document.addEventListener("DOMContentLoaded", () => {
           showAlert(`Your account status is '${data.user.status}'. Access denied.`, "danger");
           return;
         }
-        showAlert("Login successful! Redirecting...", "success");
+        
+        // Store user data in session storage
         sessionStorage.setItem("user", JSON.stringify(data.user));
-        setTimeout(() => {
-          window.location.href = "index.html";
-        }, 1500);
+        
+        // Check if user is admin and redirect accordingly
+        if (data.user && (data.user.isAdmin || data.user.role === "admin")) {
+          showAlert("Admin login successful! Redirecting to admin dashboard...", "success");
+          setTimeout(() => {
+            window.location.href = "adminOverview.html";
+          }, 1500);
+        } else {
+          showAlert("Login successful! Redirecting...", "success");
+          setTimeout(() => {
+            window.location.href = "index.html";
+          }, 1500);
+        }
       } else {
         // Show message if backend sent a status denial
         const message = data.message || data.error || "Login failed. Please try again.";

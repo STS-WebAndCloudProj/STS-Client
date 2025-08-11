@@ -21,19 +21,10 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="./css/style1.css" />
+  <link rel="stylesheet" href="./css/adminStyle.css" />
 </head>
 
 <body>
-  <!-- <nav>
-    <a href="index.html" id="logo"></a>
-    <ul>
-      <li><a class="selected" href="#"><img src="./images/admin_console_yellow.svg" /> Overview</a></li>
-      <li><a href="adminUser.html"><img src="./images/Users_white.svg" /> Users</a></li>
-    </ul>
-    <a id="logout" class="underline" href="#"><img id="logout-img" src="./images/logout.png"><span>Logout</span></a>
-  </nav> -->
- <!-- <a href="#" class="selected"><img id="selected-dash-img" src="./images/Users_yellow.svg" />Dashboard</a> -->
     <nav>
     <a href="adminOverview.html" id="logo"></a>
     <ul>
@@ -54,22 +45,22 @@
       <section class="custom-card admin-bg">
         <section class="custom-card-header"></section>
         <section class="custom-card-body">
-          <h3>Online</h3>
-          <p class="card-val">0</p>
-        </section>
-      </section>
-      <section class="custom-card admin-bg">
-        <section class="custom-card-header"></section>
-        <section class="custom-card-body">
           <h3>Scans</h3>
-          <p class="card-val">0</p>
+          <p class="card-val">1,247</p>
         </section>
       </section>
       <section class="custom-card admin-bg">
         <section class="custom-card-header"></section>
         <section class="custom-card-body">
-          <h3>Risks</h3>
-          <p class="card-val">0</p>
+          <h3>Critical</h3>
+          <p class="card-val">3</p>
+        </section>
+      </section>
+      <section class="custom-card admin-bg">
+        <section class="custom-card-header"></section>
+        <section class="custom-card-body">
+          <h3>Pending</h3>
+          <p class="card-val">7</p>
         </section>
       </section>
     </section>
@@ -113,6 +104,9 @@
     </section>
   </main>
 
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  
   <script src="./js/admin-overview.js"></script>
 </body>
 

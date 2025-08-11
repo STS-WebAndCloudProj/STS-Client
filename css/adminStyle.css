@@ -26,8 +26,7 @@ article {
 main {
   margin-left: 303px;
   padding: 24px;
-  width: calc(100% - 303px);
-  box-sizing: border-box;
+  width: 100%; /* Match index page exactly */
 }
 
 main h2 {
@@ -111,7 +110,7 @@ nav button:hover {
 nav ul a {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: flex-start; /* Back to original */
   color: #f5f5f5;
   font-size: 20px;
   text-decoration: none;
@@ -238,7 +237,8 @@ ul {
   overflow: visible;
   /* margin-top: 24px; */
   /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); */
-  margin-bottom: 150px; /* Add space for dropdowns */
+  margin-bottom: 150px;
+  /* Add space for dropdowns */
 }
 
 #user-table table {
@@ -364,9 +364,9 @@ ul {
 
 .pagination-controls button:hover {
   background-color: #f2f2f2;
-} */
+}
 
-#next-button-container {
+*/ #next-button-container {
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
@@ -401,19 +401,15 @@ ul {
 } */
 #admin-custom-cards {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  /* gap: 90px; */
+  gap: 250px; /* Back to original large gap */
   align-items: flex-start;
-  margin-top: 24px;
-  margin-bottom: 32px;
-  width: 80%;
+  margin-top: 24px; /* Back to original margins */
+  margin-bottom: 32px; /* Back to original margins */
+  width: 80%; /* Back to original width constraint */
 }
 
 .custom-card {
-  flex: 1;
-  /* min-width: 160px; */
-  max-width: 200px;
+  width: 200px; /* Fixed width to match index page exactly */
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
 }
@@ -432,18 +428,18 @@ ul {
 
 .custom-card-header {
   width: 100%;
-  height: 25px;
+  height: 30px; /* Match index cards height */
   border-radius: 10px 10px 0 0;
 }
 
 .custom-card-body {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100px;
-  border-radius: 0 0 10px 10px;
-  opacity: 0.97;
-  background: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 124px; /* Same as index cards */
+    border-radius: 0px 0px 10px 10px;
+    opacity: 0.97;
+    background: #f5f5f5;
 }
 
 /* .custom-card-body canvas {
@@ -451,12 +447,11 @@ ul {
 } */
 
 .custom-card-body h3 {
-
   color: #182b4e;
-  font-size: 24px;
+  font-size: 30px; /* Match index cards exactly */
   font-weight: 500;
-  margin-top: 6px;
-  margin-left: 12px;
+  margin-top: 6px; /* Match index cards margin */
+  margin-left: 12px; /* Match index cards margin */
 }
 
 .custom-card-body p {
@@ -464,9 +459,9 @@ ul {
   justify-content: flex-end;
   align-items: flex-end;
   color: #182b4e;
-  font-size: 24px;
-  font-weight: 500;
-  margin-right: 12px;
+  font-size: 30px; /* Match index cards exactly */
+  font-weight: 500; /* Match index cards weight */
+  margin-right: 12px; /* Match index cards margin */
 }
 
 
@@ -595,7 +590,7 @@ ul {
 
 .dropdown-menu {
   position: absolute;
-   z-index: 1000;
+  z-index: 1000;
   background-color: #fff;
   min-width: 160px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -1054,7 +1049,7 @@ ul {
 
 #user-table {
   width: 80%;
-  
+
   /* margin: 0 auto; */
   /* padding: 20px; */
   background-color: #ffffff;
@@ -1105,27 +1100,32 @@ ul {
 /* Column-specific alignment */
 #user-table th:nth-child(1),
 #user-table td:nth-child(1) {
-  text-align: left; /* Email column */
+  text-align: left;
+  /* Email column */
 }
 
 #user-table th:nth-child(2),
 #user-table td:nth-child(2) {
-  text-align: center; /* Status column - center for badges */
+  text-align: center;
+  /* Status column - center for badges */
 }
 
 #user-table th:nth-child(3),
 #user-table td:nth-child(3) {
-  text-align: center; /* Sites column - center for numbers */
+  text-align: center;
+  /* Sites column - center for numbers */
 }
 
 #user-table th:nth-child(4),
 #user-table td:nth-child(4) {
-  text-align: center; /* Last Login column - center for dates */
+  text-align: center;
+  /* Last Login column - center for dates */
 }
 
 #user-table th:nth-child(5),
 #user-table td:nth-child(5) {
-  text-align: center; /* Actions column - center for dropdowns */
+  text-align: center;
+  /* Actions column - center for dropdowns */
 }
 
 .avatar-circle {
@@ -1294,17 +1294,22 @@ ul {
 
 .chart-title {
   color: #182b4e;
-  font-size: 20px;
+  font-size: 24px;
+  /* Increased from 20px */
   font-weight: 600;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  margin-bottom: 12px;
+  gap: 8px;
+  /* Increased from 6px */
+  margin-bottom: 20px;
+  /* Increased from 12px */
 }
 
 .info-icon {
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  /* Increased from 14px */
+  height: 18px;
+  /* Increased from 14px */
   margin-top: 0;
   vertical-align: middle;
   flex-shrink: 0;
@@ -1314,14 +1319,22 @@ ul {
 .chart-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 40px;
+  gap: 60px;
+  /* Increased from 40px */
   margin-top: 40px;
+  width: 100%;
+  /* Ensure full width usage */
 }
 
 .chart-box {
   flex: 1;
-  min-width: 300px;
-  max-width: 500px;
+  min-width: 400px;
+  /* Increased from 300px */
+  max-width: 600px;
+  /* Increased from 500px */
+  border-radius: 12px;
+  padding: 24px;
+  /* Added padding for better appearance */
 }
 
 .custom-legend {
