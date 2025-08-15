@@ -1,8 +1,7 @@
-// Initializes suspend user functionality - handles clicks on suspend links
+// Initializes user management functionality
 document.addEventListener("DOMContentLoaded", async () => {
-  const serverUrl = 'http://localhost:3000/api';
-  // const serverUrl = 'https://sts-server-cjv3.onrender.com/api';
-  const suspendLinks = document.querySelectorAll(".suspend-user-link");
+  // const serverUrl = 'http://localhost:3000/api';
+  const serverUrl = 'https://sts-server-cjv3.onrender.com/api';
 
   // Check if user is logged in
   const user = JSON.parse(sessionStorage.getItem("user"));
@@ -107,8 +106,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       const usersData = await fetchAllUsers(page, search, status);
       if (usersData && usersData.users) {
         updateUsersTable(usersData.users);
-        // Re-attach event listeners after table update
-        attachSuspendEventListeners();
       }
     } catch (error) {
       console.error('Error loading users table:', error);
@@ -165,17 +162,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         <td>${user.sitesCount || 0}</td>
         <td>${user.lastLogin || 'Never'}</td>
         <td>
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Select
-            </button>
-            <ul class="dropdown-menu">
-              <li><a href="#"><img src="./images/edit_user.svg" alt="Edit" width="16" class="me-2" />Edit User</a></li>
-              <li><a href="#"><img src="./images/view_logs.png" alt="Logs" width="16" class="me-2" />View Logs</a></li>
-              <li><a href="#" class="suspend-user-link"><img src="./images/suspend_user.svg" alt="Suspend" width="16" class="me-2" />Suspend Account</a></li>
-              <li><a href="#"><img src="./images/delete_user.svg" alt="Delete" width="16" class="me-2" />Delete User</a></li>
-            </ul>
-          </div>
+          <section class="actions-container">
+            <a href="#" data-bs-toggle="modal" data-bs-target="#editUserModal"><img src="./images/edit_user.svg" alt="Edit User" /></a>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#deleteUserModal"><img src="./images/delete_user.svg" alt="Delete User"/></a>
+          </section>
         </td>
       `;
       
@@ -183,30 +173,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     console.log(`Updated table with ${users.length} users`);
-  }
-
-  // Attach event listeners to suspend links
-  function attachSuspendEventListeners() {
-    const suspendLinks = document.querySelectorAll(".suspend-user-link");
-    
-    suspendLinks.forEach(link => {
-      // Remove existing listener to avoid duplicates
-      link.removeEventListener('click', handleSuspendClick);
-      link.addEventListener('click', handleSuspendClick);
-    });
-  }
-
-  // Handle suspend link clicks
-  function handleSuspendClick(event) {
-    event.preventDefault();
-    const row = this.closest('tr');
-    const emailCell = row.querySelector('td:first-child');
-    const email = emailCell.textContent.trim();
-    
-    document.getElementById('suspendUserEmail').textContent = email;
-    
-    const modal = new bootstrap.Modal(document.getElementById('suspendUserModal'));
-    modal.show();
   }
 
   // Load and display user statistics on the dashboard
@@ -224,9 +190,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       showError('Failed to load dashboard data');
     }
   }
-
-  // Initial setup for suspend links (will be re-attached after table updates)
-  attachSuspendEventListeners();
 
   // Add search functionality
   const searchInput = document.querySelector('.custom-search');
@@ -296,28 +259,41 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Display error notification to user
   function showError(message) {
-    // Create error notification
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'alert alert-danger alert-dismissible fade show';
-    errorDiv.style.position = 'fixed';
-    errorDiv.style.top = '20px';
-    errorDiv.style.right = '20px';
-    errorDiv.style.zIndex = '9999';
-    errorDiv.style.maxWidth = '400px';
+    showAlert(message, 'danger');
+  }
 
-    errorDiv.innerHTML = `
-      <strong>Error:</strong> ${message}
-      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  // Display success notification to user  
+  function showSuccess(message) {
+    showAlert(message, 'success');
+  }
+
+  // Display styled alert notification
+  function showAlert(message, type) {
+    // Create alert container if it doesn't exist
+    let alertContainer = document.getElementById('alertContainer');
+    if (!alertContainer) {
+      alertContainer = document.createElement('div');
+      alertContainer.id = 'alertContainer';
+      alertContainer.style.position = 'fixed';
+      alertContainer.style.top = '20px';
+      alertContainer.style.left = '50%';
+      alertContainer.style.transform = 'translateX(-50%)';
+      alertContainer.style.zIndex = '9999';
+      alertContainer.style.maxWidth = '400px';
+      alertContainer.style.width = '90%';
+      document.body.appendChild(alertContainer);
+    }
+    
+    const icon = type === "success" ? "bi-check-circle-fill" : "bi-exclamation-triangle-fill";
+    alertContainer.innerHTML = `
+      <div class="alert alert-${type} d-flex align-items-center shadow" role="alert">
+        <i class="bi ${icon} flex-shrink-0 me-2" role="img" aria-label="${type}"></i>
+        <div>${message}</div>
+      </div>
     `;
-
-    document.body.appendChild(errorDiv);
-
-    // Auto-remove after 5 seconds
     setTimeout(() => {
-      if (errorDiv.parentNode) {
-        errorDiv.parentNode.removeChild(errorDiv);
-      }
-    }, 5000);
+      alertContainer.innerHTML = "";
+    }, 4000);
   }
 
   // Handle logout
@@ -329,27 +305,376 @@ document.addEventListener("DOMContentLoaded", async () => {
       window.location.href = 'login.html';
     });
   }
-});
 
+  // ================== NEW MODAL FUNCTIONALITY ==================
 
-// Handles the suspend confirmation process - calculates end date and shows confirmation modal
-document.getElementById("suspendBtn").addEventListener("click", function () {
-  // Gets selected suspension duration and calculates end date
-  const duration = document.querySelector('input[name="suspendDuration"]:checked').value;
+  // Handle Edit User Modal
+  document.getElementById('editUserModal').addEventListener('show.bs.modal', function (event) {
+    // Get the button that triggered the modal
+    var button = event.relatedTarget;
+    var row = button.closest('tr');
+    
+    // Store reference to the button for later use
+    this._triggerButton = button;
+    
+    // Extract info from data attributes and table cells
+    var email = row.cells[0].textContent;
+    var status = row.getAttribute('data-status');
+    
+    // Update the modal's content
+    document.getElementById('editUserEmail').textContent = email;
+    document.getElementById('editUserName').textContent = email; // Using email as name for now
+    document.getElementById('editUserStatus').value = status;
+    
+    // Show/hide options based on current status
+    toggleStatusOptions(status);
+  });
 
-  const today = new Date();
-  today.setDate(today.getDate() + parseInt(duration));
+  // Handle status change in edit modal
+  document.getElementById('editUserStatus').addEventListener('change', function() {
+    var selectedStatus = this.value;
+    toggleStatusOptions(selectedStatus);
+  });
 
-  const formattedDate = today.toLocaleDateString('en-GB'); // dd/mm/yyyy
+  // Function to show/hide status-specific options
+  function toggleStatusOptions(status) {
+    var suspensionOptions = document.getElementById('suspensionOptions');
+    var disableOptions = document.getElementById('disableOptions');
+    
+    // Hide all options first
+    suspensionOptions.style.display = 'none';
+    disableOptions.style.display = 'none';
+    
+    // Show relevant options based on status
+    if (status === 'suspended') {
+      suspensionOptions.style.display = 'block';
+    } else if (status === 'disabled') {
+      disableOptions.style.display = 'block';
+    }
+  }
 
-  document.getElementById("suspension-end-date").textContent = formattedDate;
+  // Handle disable reason dropdown change
+  document.getElementById('editDisableReason').addEventListener('change', function() {
+    var customTextarea = document.getElementById('editDisableReasonCustom');
+    if (this.value === 'other') {
+      customTextarea.style.display = 'block';
+    } else {
+      customTextarea.style.display = 'none';
+    }
+  });
 
-  // Hides suspend modal and shows confirmation modal
-  const suspendModal = bootstrap.Modal.getInstance(document.getElementById("suspendUserModal"));
-  suspendModal.hide();
+  // Handle Delete User Modal
+  document.getElementById('deleteUserModal').addEventListener('show.bs.modal', function (event) {
+    // Get the button that triggered the modal
+    var button = event.relatedTarget;
+    var row = button.closest('tr');
+    
+    // Extract info from table cells
+    var email = row.cells[0].textContent;
+    
+    // Update the modal's content
+    document.getElementById('deleteUserEmail').textContent = email;
+    document.getElementById('deleteUserName').textContent = email; // Using email as name for now
+  });
 
-  const confirmModal = new bootstrap.Modal(document.getElementById("suspendConfirmationModal"));
-  confirmModal.show();
+  // Handle delete confirmation input
+  document.getElementById('deleteConfirmation').addEventListener('input', function() {
+    var deleteBtn = document.getElementById('deleteUserBtn');
+    if (this.value === 'DELETE') {
+      deleteBtn.disabled = false;
+    } else {
+      deleteBtn.disabled = true;
+    }
+  });
+
+  // Handle save user changes
+  document.getElementById('saveUserBtn').addEventListener('click', async function() {
+    var selectedStatus = document.getElementById('editUserStatus').value;
+    var message = 'User action completed successfully!';
+    
+    // Get the current modal trigger button and row
+    var modal = document.getElementById('editUserModal');
+    var button = modal._triggerButton;
+    var row = button ? button.closest('tr') : null;
+    
+    if (!row) {
+      showError('Could not identify user row');
+      return;
+    }
+
+    // Get user email for API call
+    var userEmail = row.cells[0].textContent.trim();
+    
+    // Prepare update data
+    var updateData = {
+      email: userEmail,
+      status: selectedStatus
+    };
+
+    if (selectedStatus === 'suspended') {
+      var duration = document.querySelector('input[name="suspendDuration"]:checked').value;
+      var reason = document.getElementById('editSuspendReason').value;
+      updateData.suspendDuration = duration;
+      updateData.suspendReason = reason;
+      message = `User suspended for ${duration} days.`;
+      if (reason) {
+        message += ` Reason: ${reason}`;
+      }
+    } else if (selectedStatus === 'disabled') {
+      var disableReason = document.getElementById('editDisableReason').value;
+      var customReason = document.getElementById('editDisableReasonCustom').value;
+      updateData.disableReason = disableReason === 'other' ? customReason : disableReason;
+      
+      message = `User account disabled.`;
+      if (updateData.disableReason) {
+        message += ` Reason: ${updateData.disableReason.replace('_', ' ')}`;
+      }
+    } else if (selectedStatus === 'active') {
+      message = 'User account activated successfully!';
+    }
+    
+    try {
+      // Show loading state
+      this.disabled = true;
+      this.textContent = 'Saving...';
+      
+      // Make API call to update user status
+      const success = await updateUserStatus(updateData);
+      
+      if (success) {
+        // Update the table row immediately
+        updateRowStatus(row, selectedStatus);
+        
+        // Show success message
+        showSuccess(message);
+        
+        // Close modal
+        var modalInstance = bootstrap.Modal.getInstance(document.getElementById('editUserModal'));
+        modalInstance.hide();
+        
+        // Reload stats to reflect changes
+        await loadUserStats();
+      } else {
+        showError('Failed to update user status. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error updating user status:', error);
+      showError('Error updating user status. Please try again.');
+    } finally {
+      // Reset button state
+      this.disabled = false;
+      this.textContent = 'Save Changes';
+    }
+  });
+
+  // Function to update user status via API
+  async function updateUserStatus(updateData) {
+    try {
+      console.log('Updating user status:', JSON.stringify(updateData, null, 2));
+      console.log('Admin user making request:', JSON.stringify(user, null, 2));
+      console.log('Admin user details:', {
+        userId: user.userId,
+        email: user.email,
+        role: user.role,
+        status: user.status
+      });
+      
+      // First, we need to get the user data from the email
+      const targetUser = await findUserByEmail(updateData.email);
+      if (!targetUser) {
+        throw new Error('User not found');
+      }
+      
+      console.log('Target user to update:', JSON.stringify(targetUser, null, 2));
+      
+      // Use the main admin route: PATCH /api/users/admin/:userId/status
+      // Using same headers that work for stats and user list calls
+      const requestHeaders = {
+        'Content-Type': 'application/json',
+        'user-id': user.userId || '',
+        'X-User-Role': user.role || '',
+        'admin-id': user._id || '' // Try adding MongoDB _id as admin-id
+      };
+      
+      console.log('Request headers being sent (same as working calls):', JSON.stringify(requestHeaders, null, 2));
+      
+      const requestUrl = `${serverUrl}/users/admin/${targetUser.userId}/status`;
+      const requestBody = { status: updateData.status };
+      
+      console.log('Request URL:', requestUrl);
+      console.log('Request body:', JSON.stringify(requestBody, null, 2));
+      console.log('Status being sent:', requestBody.status);
+      console.log('Status type:', typeof requestBody.status);
+      
+      const response = await fetch(requestUrl, {
+        method: 'PATCH',
+        headers: requestHeaders,
+        body: JSON.stringify(requestBody)
+      });
+
+      console.log('Update response status:', response.status);
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          console.error("Unauthorized access");
+          window.location.href = "login.html";
+          return false;
+        }
+        if (response.status === 403) {
+          console.error("Access denied. Check admin permissions.");
+          // Let's also check if the admin user exists in the database
+          console.log('Checking if admin user exists in database...');
+          const adminCheck = await findUserByEmail(user.email);
+          console.log('Admin user from database:', JSON.stringify(adminCheck, null, 2));
+          console.log('Admin user details from DB:', {
+            userId: adminCheck?.userId,
+            email: adminCheck?.email,
+            role: adminCheck?.role,
+            status: adminCheck?.status
+          });
+          console.log('Session storage user:', JSON.stringify(user, null, 2));
+          console.log('Headers sent to server:', JSON.stringify(requestHeaders, null, 2));
+          console.log('Are userIds matching?', adminCheck?.userId === user.userId);
+        }
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+      }
+
+      const result = await response.json();
+      console.log('Update result:', result);
+      return result.message && result.message.includes('successfully');
+    } catch (error) {
+      console.error('Error in updateUserStatus:', error);
+      throw error;
+    }
+  }
+
+  // Helper function to find user by email (since your API uses userId)
+  async function findUserByEmail(email) {
+    try {
+      // Use your existing search endpoint to find the user
+      const response = await fetch(`${serverUrl}/users/admin/search?email=${encodeURIComponent(email)}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'user-id': user.userId,
+          'X-User-Role': user.role
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Search failed: ${response.status}`);
+      }
+
+      const users = await response.json();
+      return users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    } catch (error) {
+      console.error('Error finding user by email:', error);
+      return null;
+    }
+  }
+
+  // Function to update a table row's status
+  function updateRowStatus(row, newStatus) {
+    // Update the data attribute
+    row.setAttribute('data-status', newStatus);
+    
+    // Update the status badge
+    var statusCell = row.cells[1]; // Second column is status
+    var badge = statusCell.querySelector('.badge');
+    if (badge) {
+      // Remove old status classes
+      badge.classList.remove('active', 'suspended', 'disabled');
+      // Add new status class
+      badge.classList.add(newStatus);
+      // Update text
+      badge.textContent = newStatus.charAt(0).toUpperCase() + newStatus.slice(1);
+    }
+  }
+
+  // Handle delete user confirmation
+  document.getElementById('deleteUserBtn').addEventListener('click', async function() {
+    // Get user email from modal
+    var userEmail = document.getElementById('deleteUserEmail').textContent.trim();
+    
+    try {
+      // Show loading state
+      this.disabled = true;
+      this.textContent = 'Deleting...';
+      
+      // Make API call to delete user
+      const success = await deleteUser(userEmail);
+      
+      if (success) {
+        showSuccess('User deleted successfully!');
+        
+        // Close modal
+        var modalInstance = bootstrap.Modal.getInstance(document.getElementById('deleteUserModal'));
+        modalInstance.hide();
+        
+        // Reload the table and stats to reflect changes
+        await loadUsersTable();
+        await loadUserStats();
+      } else {
+        showError('Failed to delete user. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      showError('Error deleting user. Please try again.');
+    } finally {
+      // Reset button state
+      this.disabled = false;
+      this.textContent = 'Delete User';
+    }
+  });
+
+  // Function to delete user via API
+  async function deleteUser(userEmail) {
+    try {
+      console.log('Deleting user:', userEmail);
+      
+      // First, we need to get the userId from the email
+      const userData = await findUserByEmail(userEmail);
+      if (!userData) {
+        throw new Error('User not found');
+      }
+      
+      // Use your existing endpoint: DELETE /api/users/admin/:userId
+      const response = await fetch(`${serverUrl}/users/admin/${userData.userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'user-id': user.userId,
+          'X-User-Role': user.role
+        }
+      });
+
+      console.log('Delete response status:', response.status);
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          console.error("Unauthorized access");
+          window.location.href = "login.html";
+          return false;
+        }
+        if (response.status === 403) {
+          console.error("Access denied. Check admin permissions.");
+          console.log('Current user:', user);
+        }
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+      }
+
+      const result = await response.json();
+      console.log('Delete result:', result);
+      return result.message && result.message.includes('successfully');
+    } catch (error) {
+      console.error('Error in deleteUser:', error);
+      throw error;
+    }
+  }
 });
 
 // Initializes table filtering functionality for status and plan filters

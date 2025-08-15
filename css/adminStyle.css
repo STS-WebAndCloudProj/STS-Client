@@ -10,6 +10,7 @@
 
 body {
   background-color: #f5f5f5;
+  overflow-x: hidden;
 }
 
 header,
@@ -26,7 +27,9 @@ article {
 main {
   margin-left: 303px;
   padding: 24px;
-  width: 100%; /* Match index page exactly */
+  width: calc(100% - 303px); /* Adjust width to account for sidebar */
+  max-width: calc(100vw - 303px); /* Ensure it doesn't exceed viewport */
+  box-sizing: border-box;
 }
 
 main h2 {
@@ -229,9 +232,14 @@ ul {
 }
 
 /* ===================== Table ===================== */
-#user-table {
+#users-table-section {
   width: 80%;
-  /* Fixed width to match index table pattern */
+  /* Match cards width exactly */
+}
+
+#user-table {
+  width: 100%;
+  /* Take full width of parent container */
   background-color: white;
   border-radius: 10px;
   overflow: visible;
@@ -252,14 +260,14 @@ ul {
 }
 
 #user-table th {
-  font-size: 14px;
+  font-size: 16px;
   color: #182b4e;
   font-weight: 600;
   padding: 12px 24px;
 }
 
 #user-table td {
-  font-size: 14px;
+  font-size: 16px;
   color: #182b4e;
   padding: 12px 24px;
 }
@@ -1048,8 +1056,8 @@ ul {
 } */
 
 #user-table {
-  width: 80%;
-
+  width: 100%;
+  /* Take full width of parent container */
   /* margin: 0 auto; */
   /* padding: 20px; */
   background-color: #ffffff;
@@ -1087,7 +1095,7 @@ ul {
   text-align: left;
   border-bottom: 1px solid #e5e5e5;
   color: #182b4e;
-  font-size: 14px;
+  font-size: 16px;
   vertical-align: middle;
 }
 
@@ -1101,7 +1109,12 @@ ul {
 #user-table th:nth-child(1),
 #user-table td:nth-child(1) {
   text-align: left;
-  /* Email column */
+  width: 25%;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  /* Email column - smaller width */
 }
 
 #user-table th:nth-child(2),
@@ -1235,7 +1248,8 @@ ul {
   border-radius: 8px;
   /* border: 1px solid #6389CF; */
   margin-bottom: 8px;
-  width: 80%;
+  width: 100%;
+  /* Take full width of parent container */
   height: 50px;
   box-sizing: border-box;
 }
@@ -1408,4 +1422,54 @@ ul {
   font-weight: 700;
   color: #182b4e;
   text-align: right;
+}
+
+/*tooltip*/
+
+.tooltip-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.custom-tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.custom-tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 50%;
+    left: 110%;
+    transform: translateY(-50%);
+    background-color: #ffffff;
+    color: #182b4e;
+    padding: 6px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    font-size: 15px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease-in-out;
+    z-index: 1000;
+}
+
+.custom-tooltip::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 103%;
+    transform: translateY(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    z-index: 999;
+}
+
+.custom-tooltip:hover::after,
+.custom-tooltip:hover::before {
+    opacity: 1;
 }

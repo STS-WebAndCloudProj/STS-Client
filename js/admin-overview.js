@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  const serverUrl = 'http://localhost:3000/api';
-  // const serverUrl = 'https://sts-server-cjv3.onrender.com/api';
+  // const serverUrl = 'http://localhost:3000/api';
+  const serverUrl = 'https://sts-server-cjv3.onrender.com/api';
   
   // Check if user is logged in
   const user = JSON.parse(sessionStorage.getItem("user"));

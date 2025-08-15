@@ -25,13 +25,14 @@
 </head>
 
 <body>
-    <nav>
+  <nav>
     <a href="adminOverview.html" id="logo"></a>
     <ul>
       <li><a href="#" class="selected"><img id="selected-dash-img"
-            src="./images/admin_console_yellow.svg"/><span>Overview</span></a></li>
+            src="./images/admin_console_yellow.svg" /><span>Overview</span></a></li>
       <li>
-        <a href="adminUser.html" class="underline"><img id="dash-img" src="./images/Users_white.svg" /><span>Users</span></a>
+        <a href="adminUser.html" class="underline"><img id="dash-img"
+            src="./images/Users_white.svg" /><span>Users</span></a>
       </li>
     </ul>
     <a id="logout" class="underline" href="#"><img id="logout-img" src="./images/logout.png" /><span>Logout</span></a>
@@ -46,24 +47,26 @@
         <section class="custom-card-header"></section>
         <section class="custom-card-body">
           <h3>Scans</h3>
-          <p class="card-val">1,247</p>
+          <p class="card-val"></p>
         </section>
       </section>
       <section class="custom-card admin-bg">
         <section class="custom-card-header"></section>
         <section class="custom-card-body">
           <h3>Critical</h3>
-          <p class="card-val">3</p>
+          <p class="card-val"></p>
         </section>
       </section>
       <section class="custom-card admin-bg">
         <section class="custom-card-header"></section>
         <section class="custom-card-body">
           <h3>Pending</h3>
-          <p class="card-val">7</p>
+          <p class="card-val"></p>
         </section>
       </section>
     </section>
+
+
 
     <!-- Charts -->
     <section class="chart-grid">
@@ -71,7 +74,9 @@
       <div class="chart-box" id="scan-activity-box">
         <h4 class="chart-title">
           Scan Activity
-          <img src="./images/information.svg" alt="Info" class="info-icon" title="Scan counts per day">
+          <span class="custom-tooltip" data-tooltip="Completed scans per day">
+            <img class="tooltip-icon" src="./images/information.svg" alt="info">
+          </span>
         </h4>
         <canvas id="scanChart"></canvas>
       </div>
@@ -80,7 +85,9 @@
       <div class="chart-box pie-chart" id="vuln-types-box">
         <h4 class="chart-title">
           Vulnerability Types
-          <img src="./images/information.svg" alt="Info" class="info-icon" title="Breakdown of vulnerabilities">
+          <span class="custom-tooltip" data-tooltip="Breakdown of vulnerabilities">
+            <img class="tooltip-icon" src="./images/information.svg" alt="info">
+          </span>
         </h4>
         <canvas id="vulnChart"></canvas>
         <div class="custom-legend">
@@ -105,8 +112,9 @@
   </main>
 
   <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
+
   <script src="./js/admin-overview.js"></script>
 </body>
 

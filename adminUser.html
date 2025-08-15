@@ -29,7 +29,8 @@
       <li><a href="adminOverview.html" class="underline"><img id="dash-img"
             src="./images/admin_console_white.svg"><span>Overview</span></a></li>
       <li>
-        <a href="#" class="selected"><img id="selected-dash-img" src="./images/Users_yellow.svg"/><span>Users</span></a>
+        <a href="#" class="selected"><img id="selected-dash-img"
+            src="./images/Users_yellow.svg" /><span>Users</span></a>
       </li>
     </ul>
     <a id="logout" class="underline" href="#"><img id="logout-img" src="./images/logout.png" /><span>Logout</span></a>
@@ -43,21 +44,21 @@
         <section class="custom-card-header"></section>
         <section class="custom-card-body">
           <h3>Registered</h3>
-          <p class="card-val">210</p>
+          <p class="card-val"></p>
         </section>
       </section>
       <section class="custom-card admin-bg">
         <section class="custom-card-header"></section>
         <section class="custom-card-body">
           <h3>Active</h3>
-          <p class="card-val">85</p>
+          <p class="card-val"></p>
         </section>
       </section>
       <section class="custom-card admin-bg">
         <section class="custom-card-header"></section>
         <section class="custom-card-body">
           <h3>Suspended</h3>
-          <p class="card-val">10</p>
+          <p class="card-val"></p>
         </section>
       </section>
     </section>
@@ -77,209 +78,116 @@
           <thead>
             <tr>
               <th scope="col">Email</th>
-              <th scope="col">
-                <div class="dropdown">
-                  <button class="dropdown-toggle status-dropdown-toggle">Status</button>
-                  <ul class="dropdown-menu">
-                    <li class="status-list">Active</li>
-                    <li class="status-list">Suspended</li>
-                    <li class="status-list">Disabled</li>
-                    <li class="status-list">Inactive</li>
-                  </ul>
-                </div>
-              </th>
+              <th scope="col">Status</th>
               <th scope="col">Sites</th>
               <th scope="col">Last Login</th>
               <th scope="col">Actions</th>
             </tr>
-            <!-- <th scope="col">Statys>
-                
-              </td> -->
           </thead>
           <tbody>
-            <tr data-status="active" data-plan="pro">
-              <td>evan@example.com</td>
-              <td><span class="badge active">Active</span></td>
-              <td>5</td>
-              <td>10/06/2025</td>
-              <td>
-                <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    Select </button>
-
-                  <ul class="dropdown-menu">
-                    <li><a href="#"><img src="./images/edit_user.svg" alt="Logs" width="16" class="me-2" />Edit User</a>
-                    </li>
-                    <li><a href="#"><img src="./images/view_logs.png" alt="Suspend" width="16" class="me-2" />View
-                        Logs</a></li>
-                    <li><a href="#" class="suspend-user-link"><img src="./images/suspend_user.svg" alt="Suspend"
-                          width="16" class="me-2" />Suspend Account</a></li>
-                    <li><a href="#"><img src="./images/delete_user.svg" alt="Suspend" width="16" class="me-2" />Delete
-                        User</a></li>
-                  </ul>
-                </div>
-              </td>
-            </tr>
-            <tr data-status="suspended" data-plan="vip">
-              <td>arlene@example.com</td>
-              <td><span class="badge suspended">Suspended</span></td>
-              <td>2</td>
-              <td>12/06/2025</td>
-              <td>
-                <div class="dropdown">
-                  <button class="dropdown-toggle">Select </button>
-                  <ul class="dropdown-menu">
-                    <li><a href="#"><img src="./images/edit_user.svg" alt="Logs" width="16" class="me-2" />Edit User</a>
-                    </li>
-                    <li><a href="#"><img src="./images/view_logs.png" alt="Suspend" width="16" class="me-2" />View
-                        Logs</a></li>
-                    <li><a href="#" class="suspend-user-link"><img src="./images/suspend_user.svg" alt="Suspend"
-                          width="16" class="me-2" />Suspend Account</a></li>
-                    <li><a href="#"><img src="./images/delete_user.svg" alt="Suspend" width="16" class="me-2" />Delete
-                        User</a></li>
-                  </ul>
-                </div>
-              </td>
-            </tr>
-            <tr data-status="disabled" data-plan="free">
-              <td>jennie@example.com</td>
-              <td><span class="badge disabled">Disabled</span></td>
-
-              <td>2</td>
-              <td>12/06/2025</td>
-              <td>
-                <div class="dropdown">
-                  <button class="dropdown-toggle">Select </button>
-                  <ul class="dropdown-menu">
-                    <li><a href="#"><img src="./images/edit_user.svg" alt="Logs" width="16" class="me-2" />Edit User</a>
-                    </li>
-                    <li><a href="#"><img src="./images/view_logs.png" alt="Suspend" width="16" class="me-2" />View
-                        Logs</a></li>
-                    <li><a href="#" class="suspend-user-link"><img src="./images/suspend_user.svg" alt="Suspend"
-                          width="16" class="me-2" />Suspend Account</a></li>
-                    <li><a href="#"><img src="./images/delete_user.svg" alt="Suspend" width="16" class="me-2" />Delete
-                        User</a></li>
-                  </ul>
-                </div>
-              </td>
-            </tr>
-            <tr data-status="inactive" data-plan="free">
-              <td>jennie@example.com</td>
-              <td><span class="badge inactive">Inactive</span></td>
-              <td>2</td>
-              <td>07/04/2025</td>
-              <td>
-                <div class="dropdown">
-                  <button class="dropdown-toggle">Select </button>
-                  <ul class="dropdown-menu">
-                    <li><a href="#"><img src="./images/edit_user.svg" alt="Logs" width="16" class="me-2" />Edit User</a>
-                    </li>
-                    <li><a href="#"><img src="./images/view_logs.png" alt="Suspend" width="16" class="me-2" />View
-                        Logs</a></li>
-                    <li><a href="#" class="suspend-user-link"><img src="./images/suspend_user.svg" alt="Suspend"
-                          width="16" class="me-2" />Suspend Account</a></li>
-                    <li><a href="#"><img src="./images/delete_user.svg" alt="Suspend" width="16" class="me-2" />Delete
-                        User</a></li>
-                  </ul>
-                </div>
-              </td>
-            </tr>
-            <tr data-status="active" data-plan="free">
-              <td>jennie@example.com</td>
-              <td><span class="badge active">Active</span></td>
-              <td>2</td>
-              <td>18/06/2025</td>
-              <td>
-                <div class="dropdown">
-                  <button class="dropdown-toggle">Select </button>
-                  <ul class="dropdown-menu">
-                    <li><a href="#"><img src="./images/edit_user.svg" alt="Logs" width="16" class="me-2" />Edit User</a>
-                    </li>
-                    <li><a href="#"><img src="./images/view_logs.png" alt="Suspend" width="16" class="me-2" />View
-                        Logs</a></li>
-                    <li><a href="#" class="suspend-user-link"><img src="./images/suspend_user.svg" alt="Suspend"
-                          width="16" class="me-2" />Suspend Account</a></li>
-                    <li><a href="#"><img src="./images/delete_user.svg" alt="Suspend" width="16" class="me-2" />Delete
-                        User</a></li>
-                  </ul>
-                </div>
-              </td>
-            </tr>
+            <!-- Table data will be populated dynamically by admin-users.js -->
           </tbody>
         </table>
       </div>
-      <!-- Pagination -->
-      <!-- <section id="pagination-container">
-        <nav class="pagination-nav" aria-label="Page navigation example">
-          <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-                <span class="sr-only">Previous</span>
-              </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-                <span class="sr-only">Next</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </section> -->
-      <!-- Modal להשעיית משתמש -->
-      <div class="modal fade" id="suspendUserModal" tabindex="-1" aria-labelledby="suspendUserLabel" aria-hidden="true">
+      <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content p-4">
             <div class="modal-header">
-              <h5 class="modal-title fw-bold" id="suspendUserLabel">Suspend User Account</h5>
+              <h5 class="modal-title fw-bold" id="editUserLabel">Update User Status</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <p>Are you sure you want to suspend the following user?</p>
-              <p class="fw-bold mb-0" id="suspendUserName">[User Name]</p>
-              <p class="text-muted" id="suspendUserEmail">[User Email]</p>
-              <p class="small">Suspending a user will temporarily disable their access to the system. They will not be
-                able to log in or use their sites until reactivated.</p>
-              <div class="mb-3">
-                <label class="form-label d-block fw-semibold">Duration:</label>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="suspendDuration" id="suspend15" value="15" checked>
-                  <label class="form-check-label" for="suspend15">15 days</label>
+              <p>Current user: <span class="fw-bold" id="editUserName">[User Name]</span></p>
+              <p class="text-muted mb-3" id="editUserEmail">[User Email]</p>
+              
+              <form>
+                <div class="mb-3">
+                  <label for="editUserStatus" class="form-label fw-semibold">Action:</label>
+                  <select class="form-select" id="editUserStatus">
+                    <option value="active">Activate</option>
+                    <option value="suspended">Suspend</option>
+                    <option value="disabled">Disable</option>
+                  </select>
                 </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="suspendDuration" id="suspend30" value="30">
-                  <label class="form-check-label" for="suspend30">30 days</label>
+                <!-- Suspension Options - Hidden by default -->
+                <div id="suspensionOptions" class="mb-3" style="display: none;">
+                  <div class="alert alert-warning" role="alert">
+                    <small>Suspending a user will temporarily disable their access to the system. They will not be able to log in or use their sites until reactivated.</small>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label class="form-label fw-semibold">Duration:</label>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="suspendDuration" id="editSuspend15" value="15" checked>
+                      <label class="form-check-label" for="editSuspend15">15 days</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="suspendDuration" id="editSuspend30" value="30">
+                      <label class="form-check-label" for="editSuspend30">30 days</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="suspendDuration" id="editSuspend60" value="60">
+                      <label class="form-check-label" for="editSuspend60">60 days</label>
+                    </div>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="editSuspendReason" class="form-label">Reason For Suspension:</label>
+                    <textarea class="form-control" id="editSuspendReason" rows="3" placeholder="Enter reason..."></textarea>
+                  </div>
                 </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="suspendDuration" id="suspend60" value="60">
-                  <label class="form-check-label" for="suspend60">60 days</label>
+                <!-- Disable Options - Hidden by default -->
+                <div id="disableOptions" class="mb-3" style="display: none;">
+                  <div class="alert alert-danger" role="alert">
+                    <small>Disabling a user will permanently block their access to the system until manually reactivated by an administrator.</small>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="editDisableReason" class="form-label">Reason For Disabling:</label>
+                    <select class="form-select mb-2" id="editDisableReason">
+                      <option value="">Select a reason...</option>
+                      <option value="policy_violation">Policy Violation</option>
+                      <option value="security_breach">Security Breach</option>
+                      <option value="abuse_reports">Abuse Reports</option>
+                      <option value="terms_violation">Terms of Service Violation</option>
+                      <option value="other">Other</option>
+                    </select>
+                    <textarea class="form-control" id="editDisableReasonCustom" rows="2" placeholder="Additional details..." style="display: none;"></textarea>
+                  </div>
                 </div>
-              </div>
-              <div class="mb-3">
-                <label for="suspendReason" class="form-label">Reason For Suspension:</label>
-                <textarea class="form-control" id="suspendReason" rows="3" placeholder="Enter reason..."></textarea>
-              </div>
+              </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-danger" id="suspendBtn">Suspend</button>
+              <button type="button" class="btn btn-primary" id="saveUserBtn">Save Changes</button>
               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
             </div>
           </div>
         </div>
       </div>
-      <!-- Confirmation Modal -->
-      <div class="modal fade" id="suspendConfirmationModal" tabindex="-1" aria-labelledby="suspendConfirmationLabel"
-        aria-hidden="true">
+      <!-- Delete User Modal -->
+      <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content text-center p-4" style="border-radius: 12px;">
-            <h5 class="mb-3 fw-bold">User suspended</h5>
-            <p class="fw-bold fs-5 mb-3">Suspension will end on: <span id="suspension-end-date">--/--/----</span></p>
-            <button type="button" class="btn btn-primary px-4 mt-3" data-bs-dismiss="modal">Okay</button>
+          <div class="modal-content p-4">
+            <div class="modal-header">
+              <h5 class="modal-title fw-bold" id="deleteUserLabel">Delete User Account</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure you want to permanently delete the following user?</p>
+              <p class="fw-bold mb-0" id="deleteUserName">[User Name]</p>
+              <p class="text-muted" id="deleteUserEmail">[User Email]</p>
+              <div class="alert alert-danger" role="alert">
+                <strong>Warning:</strong> This action cannot be undone. All user data, sites, and associated information will be permanently deleted.
+              </div>
+              <div class="mb-3">
+                <label for="deleteConfirmation" class="form-label">Type "DELETE" to confirm:</label>
+                <input type="text" class="form-control" id="deleteConfirmation" placeholder="DELETE">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" id="deleteUserBtn" disabled>Delete User</button>
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
           </div>
         </div>
       </div>
