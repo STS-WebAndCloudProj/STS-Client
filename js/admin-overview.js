@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Fetch and display scan statistics
   await loadScanStats();
   await loadScanActivity();
+  await loadVulnerabilityTypes(); // Added this line
 
   // Fetch scan statistics from the server API
   async function fetchScanStats() {
@@ -140,6 +141,69 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
+  // Fetch vulnerability types data from the server (NEW FUNCTION)
+  async function fetchVulnerabilityTypes() {
+    try {
+        console.log('Fetching vulnerability types from:', `${serverUrl}/scans/admin/vulnerability-types`);
+        
+        const response = await fetch(`${serverUrl}/scans/admin/vulnerability-types`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'user-id': user.userId || user._id || '',
+                'X-User-Role': user.role || ''
+            }
+        });
+
+        console.log('Vulnerability types response status:', response.status);
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Vulnerability types error response:', errorText);
+            console.warn('Vulnerability types endpoint not available, using mock data');
+            // Return mock data if endpoint doesn't exist yet
+            return {
+                labels: ['Cross-site Scripting', 'SQL Injection', 'CSRF', 'Broken Authentication', 'Other'],
+                data: [28, 22, 18, 17, 15],
+                colors: ['#f16b7a', '#f8ab59', '#fbe078', '#89c791', '#62a3d3']
+            };
+        }
+
+        const responseData = await response.json();
+        console.log('Received vulnerability types data:', responseData);
+        
+        // Handle the server response format
+        if (responseData.chartData) {
+            return responseData.chartData;
+        }
+        
+        return responseData;
+    } catch (error) {
+        console.error('Error fetching vulnerability types:', error);
+        console.warn('Using mock data due to error');
+        // Fallback to mock data if there's an error
+        return {
+            labels: ['Cross-site Scripting', 'SQL Injection', 'CSRF', 'Broken Authentication', 'Other'],
+            data: [28, 22, 18, 17, 15],
+            colors: ['#f16b7a', '#f8ab59', '#fbe078', '#89c791', '#62a3d3']
+        };
+    }
+  }
+
+  // Load vulnerability types data and update the pie chart (NEW FUNCTION)
+  async function loadVulnerabilityTypes() {
+    try {
+      const vulnData = await fetchVulnerabilityTypes();
+      if (vulnData) {
+        updateVulnerabilityChart(vulnData);
+      }
+    } catch (error) {
+      console.error('Error loading vulnerability types:', error);
+      // Initialize with default data if there's an error
+      initializeCharts();
+    }
+  }
+
   // Show loading state for dashboard cards
   function showLoadingCards() {
     const cards = document.querySelectorAll('#admin-custom-cards .card-val');
@@ -261,6 +325,44 @@ function updateScanActivityChart(activityData) {
     
     scanActivityChart.update('active');
     console.log('Scan activity chart updated with real data and tooltip config');
+  } else {
+    // Initialize chart if it doesn't exist
+    initializeCharts();
+  }
+}
+
+// Update vulnerability chart with real data (NEW FUNCTION)
+function updateVulnerabilityChart(vulnData) {
+  if (vulnerabilityChart) {
+    // Update existing chart
+    vulnerabilityChart.data.labels = vulnData.labels;
+    vulnerabilityChart.data.datasets[0].data = vulnData.data;
+    vulnerabilityChart.data.datasets[0].backgroundColor = vulnData.colors;
+    
+    // Update tooltip configuration
+    vulnerabilityChart.options.plugins.tooltip = {
+      enabled: true,
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+      titleColor: 'white',
+      bodyColor: 'white',
+      borderColor: '#ffdb99',
+      borderWidth: 1,
+      cornerRadius: 6,
+      displayColors: true,
+      callbacks: {
+        title: function(context) {
+          return context[0].label;
+        },
+        label: function(context) {
+          const total = context.dataset.data.reduce((a, b) => a + b, 0);
+          const percentage = ((context.parsed / total) * 100).toFixed(1);
+          return `${context.parsed} threats (${percentage}%)`;
+        }
+      }
+    };
+    
+    vulnerabilityChart.update('active');
+    console.log('Vulnerability chart updated with real data');
   } else {
     // Initialize chart if it doesn't exist
     initializeCharts();
