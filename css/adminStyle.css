@@ -25,9 +25,9 @@ article {
 
 /* ===================== Global ===================== */
 main {
-  margin-left: 303px;
-  padding: 24px;
-  width: 100%; /* Match index page exactly */
+  margin-left: 18vw;
+  padding: 1.5vw;
+  width: 100%;
 }
 
 main h2 {
@@ -52,8 +52,8 @@ main h3 {
   background-image: url(../images/logo_white.png);
   background-size: contain;
   background-repeat: no-repeat;
-  width: 225px;
-  height: 118px;
+  width: 12vw;
+  height: 6vw;
   flex-shrink: 0;
 }
 
@@ -64,9 +64,9 @@ nav {
   align-items: center;
   background-color: #182b4e;
   height: 100vh;
-  width: 303px;
-  padding: 4vh;
-  gap: 45px;
+  width: 18vw;
+  padding: 4vh 1vw;
+  gap: 2.5vw;
 }
 
 nav button {
@@ -108,10 +108,10 @@ nav button:hover {
   color: #f4d793;
 }
 
-nav ul a {
+nav a {
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Back to original */
+  justify-content: flex-start;
   color: #f5f5f5;
   font-size: 20px;
   text-decoration: none;
@@ -193,15 +193,15 @@ ul {
 /* ===================== Summary Cards ===================== */
 #users-summary {
   display: flex;
-  gap: 24px;
-  margin-bottom: 32px;
+  gap: 1.5vw;
+  margin-bottom: 2vw;
 }
 
 #users-summary .card {
   background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
-  padding: 20px 30px;
+  border-radius: 0.8vw;
+  box-shadow: 0px 0.15vw 0.5vw rgba(0, 0, 0, 0.05);
+  padding: 1.2vw 2vw;
   flex: 1;
   text-align: center;
 }
@@ -219,32 +219,18 @@ ul {
   color: #182b4e;
 }
 
-/* ===================== Search Bar ===================== */
-/* Old search bar styles removed - replaced with new search-and-table-container design */
-
-
-.download-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-}
 
 /* ===================== Table ===================== */
 #users-table-section {
   width: 80%;
-  /* Match cards width exactly */
 }
 
 #user-table {
   width: 100%;
-  /* Take full width of parent container */
   background-color: white;
   border-radius: 10px;
   overflow: visible;
-  /* margin-top: 24px; */
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); */
   margin-bottom: 150px;
-  /* Add space for dropdowns */
 }
 
 #user-table table {
@@ -287,28 +273,24 @@ ul {
   vertical-align: middle;
 }
 
-/* Active - Green border with light green background */
 .badge.active {
   background-color: #e8f5e8;
   color: #28a745;
   border-color: #28a745;
 }
 
-/* Suspended - Red border with light red background */
 .badge.suspended {
   background-color: #f8e6e6;
   color: #dc3545;
   border-color: #dc3545;
 }
 
-/* Disabled - Gray border with light gray background */
 .badge.disabled {
   background-color: #f0f0f0;
   color: #6c757d;
   border-color: #6c757d;
 }
 
-/* Inactive - Gray border with light gray background */
 .badge.inactive {
   background-color: #f0f0f0;
   color: #6c757d;
@@ -316,63 +298,7 @@ ul {
 }
 
 
-/* ===================== Pagination ===================== */
-/* .pagination-section {
-  display: flex;
-  align-items: center;
-  margin-top: 24px;
-  font-size: 14px;
-}
-
-.pagination-controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.page-link {
-  border: 1px solid #182b4e;
-  border-radius: 6px;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #182b4e;
-  font-size: 14px;
-  background-color: #fff;
-  transition: all 0.2s ease;
-  text-decoration: none;
-  padding: 0;
-}
-
-#pagination-container {
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 24px;
-}
-
-.pagination-nav {
-  all: unset;
-  display: flex;
-  justify-content: center;
-}
-
-.pagination {
-  display: flex;
-  flex-direction: row;
-  gap: 4px;
-  background-color: transparent;
-  padding: 0;
-  list-style: none;
-  /* margin: 10px 0; */
-/* } */
-
-.pagination-controls button:hover {
-  background-color: #f2f2f2;
-}
-
-*/ #next-button-container {
+/* ===================== Pagination ===================== */ #next-button-container {
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
@@ -396,45 +322,24 @@ ul {
 }
 
 /* ===================== Custom Cards ===================== */
-/*cards*/
-
-/* #custom-cards {
-  display: flex;
-  flex-direction: row;
-  gap: 70px;
-  margin-top: 14px;
-  margin-bottom: 14px;
-} */
 #admin-custom-cards {
   display: flex;
-  gap: 250px; /* Back to original large gap */
+  gap: 13vw;
   align-items: flex-start;
-  margin-top: 24px;
-  margin-bottom: 32px;
+  margin-top: 1.5vw;
+  margin-bottom: 2vw;
   width: 80%;
 }
 
 .custom-card {
-  width: 200px; /* Fixed width to match index page exactly */
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
+  width: 12vw;
+  box-shadow: 0px 0.3vw 0.3vw 0px rgba(0, 0, 0, 0.25);
+  border-radius: 0.7vw;
 }
-
-/* .c3 {
-  background: #182b4e;
-}
-
-.c2 {
-  background: #182b4e;
-}
-
-.c1 {
-  background: #182b4e;
-} */
 
 .custom-card-header {
   width: 100%;
-  height: 30px; /* Match index cards height */
+  height: 30px;
   border-radius: 10px 10px 0 0;
 }
 
@@ -442,22 +347,18 @@ ul {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 124px; /* Same as index cards */
-    border-radius: 0px 0px 10px 10px;
+    height: 7vw;
+    border-radius: 0px 0px 0.7vw 0.7vw;
     opacity: 0.97;
     background: #f5f5f5;
 }
 
-/* .custom-card-body canvas {
-  margin-top: 10px;
-} */
-
 .custom-card-body h3 {
   color: #182b4e;
-  font-size: 30px; /* Match index cards exactly */
+  font-size: 1.8vw;
   font-weight: 500;
-  margin-top: 6px; /* Match index cards margin */
-  margin-left: 12px; /* Match index cards margin */
+  margin-top: 0.4vw;
+  margin-left: 0.7vw;
 }
 
 .custom-card-body p {
@@ -465,45 +366,39 @@ ul {
   justify-content: flex-end;
   align-items: flex-end;
   color: #182b4e;
-  font-size: 30px; /* Match index cards exactly */
-  font-weight: 500; /* Match index cards weight */
-  margin-right: 12px; /* Match index cards margin */
+  font-size: 1.8vw;
+  font-weight: 500;
+  margin-right: 0.7vw;
 }
 
 
-/* Dropdown wrapper */
 .dropdown {
   position: relative;
   display: inline-block;
 }
 
-/* Actions column dropdown container alignment */
 #user-table td .dropdown {
   text-align: center;
   width: 100%;
   position: relative;
 }
 
-/* כפתור "Select ▼" */
 .dropdown-toggle {
   background-color: transparent;
   border: none;
   border-radius: 6px;
   padding: 6px 12px;
   font-size: 14px;
-  /* font-weight: 600; */
   cursor: pointer;
   color: #182b4e !important;
   vertical-align: middle;
 }
 
-/* Actions column dropdown alignment */
 #user-table td .dropdown-toggle {
   display: inline-block;
   margin: 0 auto;
 }
 
-/* Status dropdown toggle in table header */
 .status-dropdown-toggle {
   background-color: transparent !important;
   border: none !important;
@@ -537,9 +432,6 @@ ul {
 
 
 
-/* תפריט הנפתח - consolidated with main dropdown menu styles above */
-
-/* הצגת התפריט כשמרחפים על הכפתור */
 .dropdown:hover .dropdown-menu {
   display: block;
 }
@@ -588,10 +480,8 @@ ul {
   display: block;
 }
 
-/* Dropdown */
 .dropdown {
   position: relative;
-  /* display: inline-block; */
 }
 
 .dropdown-menu {
@@ -652,7 +542,6 @@ ul {
 /* === Suspend User Modal Styling === */
 
 
-/* Header */
 #suspendUserModal .modal-header {
   border-bottom: none;
   padding: 0;
@@ -665,7 +554,6 @@ ul {
   color: #212529;
 }
 
-/* Body */
 #suspendUserModal .modal-body {
   padding: 0;
   font-size: 0.95rem;
@@ -688,7 +576,6 @@ ul {
   margin-bottom: 12px;
 }
 
-/* Duration */
 #suspendUserModal .form-check-inline {
   margin-right: 20px;
 }
@@ -698,7 +585,6 @@ ul {
   margin-bottom: 6px;
 }
 
-/* Textarea */
 #suspendUserModal textarea {
   border-radius: 8px;
   resize: vertical;
@@ -706,7 +592,6 @@ ul {
   font-size: 0.9rem;
 }
 
-/* Footer Buttons */
 #suspendUserModal .modal-footer {
   border-top: none;
   padding: 0;
@@ -716,7 +601,6 @@ ul {
   gap: 12px;
 }
 
-/* Suspend Button */
 #suspendUserModal .btn-danger {
   background-color: #e74c3c;
   border: none;
@@ -726,7 +610,6 @@ ul {
   font-size: 0.95rem;
 }
 
-/* Cancel Button */
 #suspendUserModal .btn-outline-secondary {
   border-color: #ced4da;
   color: #495057;
@@ -747,66 +630,6 @@ ul {
   padding: 32px;
   box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.2);
   font-family: 'Poppins', sans-serif;
-}
-
-/* שאר הסעיפים... */
-#pagination-container {
-  display: flex;
-}
-
-.pagination-nav {
-  all: unset;
-  display: flex;
-  justify-content: center;
-}
-
-.pagination {
-  display: flex;
-  flex-direction: row;
-  gap: 4px;
-  background-color: transparent;
-  padding: 0;
-  list-style: none;
-  margin: 10px 0;
-}
-
-.page-link {
-  border: 1px solid #182b4e;
-  border-radius: 6px;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #182b4e;
-  font-size: 14px;
-  background-color: #fff;
-  transition: all 0.2s ease;
-  text-decoration: none;
-  padding: 0;
-}
-
-.page-link:hover {
-  background-color: #182b4e;
-  color: #ffffff;
-}
-
-.page-item.active .page-link {
-  background-color: #182b4e;
-  color: #ffffff;
-  font-weight: 600;
-}
-
-.page-link:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(24, 43, 78, 0.2);
-}
-
-
-/* === Improved Suspend User Modal Design === */
-#suspendUserModal .modal-dialog {
-  max-width: 560px !important;
-  width: 90% !important;
 }
 
 #suspendUserModal .modal-content {
@@ -933,37 +756,31 @@ ul {
 
 .avatar-circle.avatar-a {
   background-color: #fde6b8;
-  /* כתום בהיר */
   color: #182b4e;
 }
 
 .avatar-circle.avatar-e {
   background-color: #cce1f9;
-  /* כחול בהיר */
   color: #182b4e;
 }
 
 .avatar-circle.avatar-j {
   background-color: #d4eaf4;
-  /* תכלת */
   color: #182b4e;
 }
 
 .avatar-circle.avatar-g {
   background-color: #e6ddf4;
-  /* סגול בהיר */
   color: #182b4e;
 }
 
 .avatar-circle.avatar-l {
   background-color: #daf5e8;
-  /* ירקרק */
   color: #182b4e;
 }
 
 .chart-box {
   flex: 0 0 360px;
-  /* פחות גמישות */
   max-width: 360px;
 }
 
@@ -976,7 +793,6 @@ ul {
 .custom-legend {
   display: flex;
   justify-content: center;
-  /* ✅ זוהי השורה שממרכזת את התוכן אופקית */
   flex-wrap: wrap;
   gap: 16px 24px;
   margin-top: 20px;
@@ -1003,11 +819,10 @@ ul {
 
 
 
-/* תיקון ספציפי לגודל ולמיקום הגרפים */
 .chart-grid {
   display: flex;
   align-items: flex-start;
-  gap: 40px;
+  gap: 2vw;
   margin-top: 30px;
 }
 
@@ -1031,12 +846,10 @@ ul {
 
 
 
-/* שליטה מדויקת בגודל הקנבס */
 #scanChart {
   width: 25% !important;
   height: auto !important;
   aspect-ratio: 2 / 3;
-  /* צר וגבוה */
   max-height: 450px;
 }
 
@@ -1047,17 +860,9 @@ ul {
 }
 
 /* User Table Layout */
-/* .search-bar-container {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 24px;
-} */
 
 #user-table {
   width: 100%;
-  /* Take full width of parent container */
-  /* margin: 0 auto; */
-  /* padding: 20px; */
   background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
@@ -1103,7 +908,6 @@ ul {
   font-weight: 600;
 }
 
-/* Column-specific alignment */
 #user-table th:nth-child(1),
 #user-table td:nth-child(1) {
   text-align: left;
@@ -1112,31 +916,26 @@ ul {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  /* Email column - smaller width */
 }
 
 #user-table th:nth-child(2),
 #user-table td:nth-child(2) {
   text-align: center;
-  /* Status column - center for badges */
 }
 
 #user-table th:nth-child(3),
 #user-table td:nth-child(3) {
   text-align: center;
-  /* Sites column - center for numbers */
 }
 
 #user-table th:nth-child(4),
 #user-table td:nth-child(4) {
   text-align: center;
-  /* Last Login column - center for dates */
 }
 
 #user-table th:nth-child(5),
 #user-table td:nth-child(5) {
   text-align: center;
-  /* Actions column - center for dropdowns */
 }
 
 .avatar-circle {
@@ -1244,10 +1043,8 @@ ul {
   padding: 10px;
   background-color: #FFFFFF;
   border-radius: 8px;
-  /* border: 1px solid #6389CF; */
   margin-bottom: 8px;
   width: 100%;
-  /* Take full width of parent container */
   height: 50px;
   box-sizing: border-box;
 }
@@ -1282,7 +1079,6 @@ ul {
   color: #8b95a9;
 }
 
-/* Select dropdown styling to match table */
 .custom-search select {
   border: none;
   background: transparent;
@@ -1307,21 +1103,16 @@ ul {
 .chart-title {
   color: #182b4e;
   font-size: 24px;
-  /* Increased from 20px */
   font-weight: 600;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  /* Increased from 6px */
   margin-bottom: 20px;
-  /* Increased from 12px */
 }
 
 .info-icon {
   width: 18px;
-  /* Increased from 14px */
   height: 18px;
-  /* Increased from 14px */
   margin-top: 0;
   vertical-align: middle;
   flex-shrink: 0;
@@ -1332,21 +1123,16 @@ ul {
   display: flex;
   flex-wrap: wrap;
   gap: 60px;
-  /* Increased from 40px */
   margin-top: 40px;
   width: 100%;
-  /* Ensure full width usage */
 }
 
 .chart-box {
   flex: 1;
   min-width: 400px;
-  /* Increased from 300px */
   max-width: 600px;
-  /* Increased from 500px */
   border-radius: 12px;
   padding: 24px;
-  /* Added padding for better appearance */
 }
 
 .custom-legend {
@@ -1375,23 +1161,19 @@ ul {
 /* === Refined Admin Dashboard Cards === */
 
 #dashboard-cards {
-  /* display: flex;
-  flex-wrap: wrap;
-  gap: 32px;
-  margin-bottom: 40px; */
   display: flex;
   flex-direction: row;
-  gap: 70px;
-  margin-top: 16px;
-  margin-bottom: 16px;
+  gap: 4vw;
+  margin-top: 1vw;
+  margin-bottom: 1vw;
 }
 
 .dashboard-card {
   background: #ffffff;
-  border-radius: 10px;
-  padding: 28px 24px;
-  width: 240px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  border-radius: 0.7vw;
+  padding: 1.8vw 1.5vw;
+  width: 13vw;
+  box-shadow: 0 0.4vw 1vw rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1413,16 +1195,12 @@ ul {
   border-radius: 10px 10px 0px 0px;
 }
 
-/* border-top: 6px solid #182b4e; */
-
 .dashboard-card-value {
-  font-size: 36px;
+  font-size: 2.2vw;
   font-weight: 700;
   color: #182b4e;
   text-align: right;
 }
-
-/*tooltip*/
 
 .tooltip-icon {
     width: 18px;
