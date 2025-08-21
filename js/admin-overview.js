@@ -374,6 +374,7 @@ function generateBarColors(labels) {
   const today = new Date();
   const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const currentDay = dayNames[today.getDay()];
+  console.log('Current day:', currentDay, 'Labels:', labels);
   
   return labels.map(label => 
     label === currentDay ? '#ffdb99' : '#0c2b56'

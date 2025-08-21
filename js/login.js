@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         // Check if user is admin and redirect accordingly
         if (data.user && (data.user.isAdmin || data.user.role === "admin")) {
-          showAlert("Admin login successful! Redirecting to admin dashboard...", "success");
+          showAlert("Admin login successful! Redirecting...", "success");
           setTimeout(() => {
             window.location.href = "adminOverview.html";
           }, 1500);

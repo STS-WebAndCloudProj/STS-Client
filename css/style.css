@@ -29,23 +29,27 @@ body {
 /* alert container placement */
 #alertContainer {
     position: absolute;
-    top: 20px;
+    top: 20px;         /* Lower the alert */
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1000;
+    z-index: 2000;      /* Make sure this is higher than your modal */
     width: auto;
     max-width: 90vw;
 }
 
 /* custom alert style (in addition to Bootstrap) */
 #alertContainer .alert {
-    font-family: 'Poppins', sans-serif;
-    border-radius: 10px;
+    display: inline;      /* Makes width fit content */
+    width: auto;                /* Remove fit-content for better compatibility */
+    min-width: 280px;           /* Prevents very narrow alerts */
+    max-width: 420px;           /* Prevents very wide alerts */
+    word-break: break-word;
+    white-space: normal;
     padding: 15px 20px;
+    border-radius: 10px;
     font-size: 0.95rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-
 /* optional: adjust icon size */
 #alertContainer .alert svg {
     width: 20px;
@@ -427,7 +431,8 @@ table td {
 /* Table hover styles - override Bootstrap's gray hover with blue */
 .table-hover tbody tr:hover td,
 .table-hover tbody tr:hover th {
-    background-color: rgba(65, 125, 200, 0.08) !important; /* Very light, transparent blue hover */
+    background-color: rgba(65, 125, 200, 0.08) !important;
+    /* Very light, transparent blue hover */
 }
 
 #scan-table .table-hover tbody tr:hover td,
@@ -436,7 +441,8 @@ table td {
 #results-table .table-hover tbody tr:hover th,
 #target-table .table-hover tbody tr:hover td,
 #target-table .table-hover tbody tr:hover th {
-    background-color: rgba(65, 125, 200, 0.08) !important; /* Very light, transparent blue hover */
+    background-color: rgba(65, 125, 200, 0.08) !important;
+    /* Very light, transparent blue hover */
     color: #182b4e !important;
 }
 
