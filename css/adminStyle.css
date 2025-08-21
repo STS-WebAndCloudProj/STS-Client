@@ -27,7 +27,7 @@ article {
 main {
   margin-left: 18vw;
   padding: 1.5vw;
-  width: 100%;
+  /* width: 100%; */
 }
 
 main h2 {
@@ -298,7 +298,8 @@ ul {
 }
 
 
-/* ===================== Pagination ===================== */ #next-button-container {
+/* ===================== Pagination ===================== */ 
+#next-button-container {
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;

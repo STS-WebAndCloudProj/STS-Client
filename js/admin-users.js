@@ -492,8 +492,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const requestHeaders = {
         'Content-Type': 'application/json',
         'user-id': user.userId || '',
-        'X-User-Role': user.role || '',
-        'admin-id': user._id || '' // Try adding MongoDB _id as admin-id
+        'X-User-Role': user.role || ''
       };
       
       console.log('Request headers being sent (same as working calls):', JSON.stringify(requestHeaders, null, 2));
